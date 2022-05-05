@@ -8,11 +8,16 @@ def test_should_return_phones_proyects_and_costs():
     app = create_app(repositories={"phones": phone_repository})
     client = app.test_client()
 
-    phone = Phones(phone="1644541544", proyect="GEN8458", costs=35)
-    phone_repository.save(phone)
+    phone_one = Phones(id="bill-1", phone="1644541544", costs=35)
+    phone_two = Phones(id="bill-2", phone="1644541545", costs=36)
+    phone_repository.save(phone_one)
+    phone_repository.save(phone_two)
 
     # ACT (when)
-    response = client.get("/api/doc/doc-1")
+    response = client.get("/api/doc")
 
     # ASSERT (then)
-    assert response.json == [{"phone": "1644541544", "proyect": "GEN8458", "costs": 35}]
+    assert response.json == [
+        {"id": "bill-1", "phone": "1644541544", "costs": 35},
+        {"id": "bill-2", "phone": "1644541545", "costs": 36},
+    ]
