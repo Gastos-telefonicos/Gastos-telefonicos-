@@ -12,9 +12,9 @@ def create_app(repositories):
     def hello_world():
         return "...magic!"
 
-    @app.route("/api/info", methods=["GET"])
-    def info_get():
-        info = repositories["info"].get_info()
-        return object_to_json(info)
+    @app.route("/api/excels", methods=["GET"])
+    def excels_get():
+        excels = repositories["excels"].get_excels()
+        return object_to_json(excels)
 
     return app
