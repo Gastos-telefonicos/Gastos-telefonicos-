@@ -1,6 +1,6 @@
 from src.lib.utils import temp_file
 from src.webserver import create_app
-from src.domain.phones import PhonesRepository, Phones
+from src.domain.phones import PhonesRepository, Phone
 
 
 def test_should_return_phones_proyects_and_costs():
@@ -8,8 +8,8 @@ def test_should_return_phones_proyects_and_costs():
     app = create_app(repositories={"phones": phone_repository})
     client = app.test_client()
 
-    phone_one = Phones(id="bill-1", phone="1644541544", costs=35)
-    phone_two = Phones(id="bill-2", phone="1644541545", costs=36)
+    phone_one = Phone(id="bill-1", phone="1644541544", costs=35, proyect="GEN1234")
+    phone_two = Phone(id="bill-2", phone="1644541545", costs=36, proyect="GEN5678")
     phone_repository.save(phone_one)
     phone_repository.save(phone_two)
 
@@ -18,6 +18,6 @@ def test_should_return_phones_proyects_and_costs():
 
     # ASSERT (then)
     assert response.json == [
-        {"id": "bill-1", "phone": "1644541544", "costs": 35},
-        {"id": "bill-2", "phone": "1644541545", "costs": 36},
+        {"id": "bill-1", "phone": "1644541544", "costs": 35, "proyect": "GEN1234"},
+        {"id": "bill-2", "phone": "1644541545", "costs": 36, "proyect": "GEN5678"},
     ]
