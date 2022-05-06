@@ -1,7 +1,7 @@
 <template>
   <router-view />
 </template>
-<style scoped>
+<style>
 * {
   box-sizing: border-box;
 }
