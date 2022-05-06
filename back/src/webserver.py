@@ -14,11 +14,6 @@ def create_app(repositories):
     def hello_world():
         return "...magic!"
 
-    @app.route("/api/excels", methods=["GET"])
-    def excels_get():
-        excels = repositories["excels"].get_excels()
-        return object_to_json(excels)
-
     @app.route("/api/doc", methods=["GET"])
     def phones_get_doc():
         phone = repositories["phones"].get_doc()
