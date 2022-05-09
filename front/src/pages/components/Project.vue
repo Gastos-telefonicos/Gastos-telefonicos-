@@ -6,7 +6,7 @@
       v-for="(cost, phone) in projectInBill.phones"
       :key="phone"
     >
-      {{ phone }} ----{{ cost }}€
+      {{ phone }} ---{{ cost }}€
     </p>
   </article>
 </template>
