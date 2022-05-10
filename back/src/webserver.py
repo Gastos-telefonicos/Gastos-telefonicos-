@@ -22,8 +22,9 @@ def create_app(repositories):
     @app.route("/api/doc", methods=["POST"])
     def phone_post():
         body = request.json
-        phone = Phone(**body)
-        repositories["phones"].save(phone)
+        for phone in body:
+            phone = Phone(**phone)
+            repositories["phones"].save(phone)
 
         return ""
 

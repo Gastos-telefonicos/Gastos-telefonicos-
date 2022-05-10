@@ -52,7 +52,12 @@ class PhonesRepository:
 
         phones = []
         for item in data:
-            contact = Phone(**item)
+            contact = Phone(
+                id=item["id"],
+                phone=item["phone"],
+                costs=item["costs"],
+                proyect=item["proyect"],
+            )
             phones.append(contact)
 
         return phones
