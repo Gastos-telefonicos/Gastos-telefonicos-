@@ -1,6 +1,6 @@
 <template>
   <article>
-    <h2>{{ projectInBill.name }} - {{ projectInBill.totalPrice }}€</h2>
+    <h2>{{ projectInBill.project }} - {{ projectInBill.totalPrice }}€</h2>
     <p
       :class="projectInBill.class"
       v-for="(cost, phone) in projectInBill.phones"
