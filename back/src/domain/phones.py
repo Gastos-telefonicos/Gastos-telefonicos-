@@ -2,17 +2,19 @@ import sqlite3
 import PyPDF2
 
 
-class Phones:
-    def __init__(self, id, phone, costs):
+class Phone:
+    def __init__(self, id, phone, costs, proyect):
         self.id = id
         self.phone = phone
         self.costs = costs
+        self.proyect = proyect
 
     def to_dict(self):
         return {
             "id": self.id,
             "phone": self.phone,
             "costs": self.costs,
+            "proyect": self.proyect,
         }
 
 
@@ -31,7 +33,8 @@ class PhonesRepository:
                 create table if not exists phones (
                     id VARCHAR PRIMARY KEY,
                     phone VARCHAR,
-                    costs INTERGER
+                    costs INTERGER,
+                    proyect VARCHAR
                 )
             """
         conn = self.create_conn()
@@ -49,25 +52,30 @@ class PhonesRepository:
 
         phones = []
         for item in data:
-            contact = Phones(**item)
+            contact = Phone(
+                id=item["id"],
+                phone=item["phone"],
+                costs=item["costs"],
+                proyect=item["proyect"],
+            )
             phones.append(contact)
 
         return phones
 
-    def get_by_id(self, id):
-        sql = """SELECT * FROM phones WHERE id=:id"""
-        conn = self.create_conn()
-        cursor = conn.cursor()
-        cursor.execute(sql, {"id": id})
+        # def get_by_id(self, id):
+        #     sql = """SELECT * FROM phones WHERE id=:id"""
+        #     conn = self.create_conn()
+        #     cursor = conn.cursor()
+        #     cursor.execute(sql, {"id": id})
 
-        data = cursor.fetchone()
-        phones = Phones(**data)
+        #     data = cursor.fetchone()
+        #     phones = Phones(**data)
 
         return phones
 
     def save(self, phones):
-        sql = """insert into phones (id, phone, costs) values (
-            :id, :phone, :costs
+        sql = """insert into phones (id, phone, costs, proyect) values (
+            :id, :phone, :costs, :proyect
         ) """
         conn = self.create_conn()
         cursor = conn.cursor()

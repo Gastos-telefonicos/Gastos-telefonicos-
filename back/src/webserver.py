@@ -3,7 +3,7 @@ from flask_cors import CORS
 
 from src.lib.utils import object_to_json
 
-from src.domain.phones import Phones
+from src.domain.phones import Phone
 
 
 def create_app(repositories):
@@ -22,8 +22,9 @@ def create_app(repositories):
     @app.route("/api/doc", methods=["POST"])
     def phone_post():
         body = request.json
-        phone = Phones(**body)
-        repositories["phones"].save(phone)
+        for phone in body:
+            phone = Phone(**phone)
+            repositories["phones"].save(phone)
 
         return ""
 
