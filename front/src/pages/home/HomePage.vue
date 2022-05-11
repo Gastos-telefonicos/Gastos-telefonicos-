@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import config from "../../config";
 export default {
   name: "Home",
   data() {
@@ -56,8 +57,8 @@ export default {
         },
         body: event.target.files[0],
       };
-      await fetch("http://localhost:5000/api/doc", settings);
       console.log(event.target.files[0]);
+      await fetch(`${config.config.API_PATH}/docs`, settings);
     },
   },
 };
