@@ -25,7 +25,6 @@
 <script>
 import Project from "../components/Project.vue";
 import exportFromJSON from "export-from-json";
-import "xlsx";
 export default {
   components: {
     Project,
@@ -73,20 +72,16 @@ export default {
   },
   methods: {
     exportDataToExcel() {
-      const data = this.projects;
+      const data = this.projects.map((project) => {
+        return {
+          Proyecto: project.project,
+          Haber: 0,
+          Debe: project.totalPrice,
+        };
+      });
       const fileName = "download";
       const exportType = "xls";
       exportFromJSON({ data, fileName, exportType });
-      // for (let object of data) {
-      //   for (let key of Object.values(object)) {
-      //     //if key is an object
-      //     if (typeof key === "object") {
-      //       for (let phone of Object.keys(key)) {
-      //         console.log(phone);
-      //       }
-      //     }
-      //   }
-      // }
     },
   },
   computed: {
