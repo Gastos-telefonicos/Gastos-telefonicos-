@@ -1,17 +1,26 @@
 from PyPDF2 import PdfFileReader
-
+import re
 
 pdf_file = open("scripts/factura-de-prueba.pdf", "rb")
 pdf_reader = PdfFileReader(pdf_file)
 
 
-numOfPages = pdf_reader.getNumPages()
+def get_text_from_all_pdf_pages(pdf_file):
 
-for i in range(0, numOfPages):
-    print("Page Number: " + str(i))
-    print("- - - - - - - - - - - - - - - - - - - -")
-    pageObj = pdf_reader.getPage(i)
-    print(pageObj.extractText())
-    print("- - - - - - - - - - - - - - - - - - - -")
+    num_pages = pdf_reader.getNumPages()
 
-pdf_file.close()
+    whole_text = ""
+
+    for i in range(8, num_pages):
+        page_obj = pdf_reader.getPage(i)
+        catched_text = page_obj.extractText()
+        whole_text += catched_text
+
+    resultado = re.search("Móvil", whole_text)
+
+    pdf_file.close()
+
+    return resultado
+
+
+print(get_text_from_all_pdf_pages(pdf_file))

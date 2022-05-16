@@ -34,6 +34,8 @@
     </ul>
     <div class="container">
       <input @change="previewFiles" type="file" id="myFile" class="btn" />
+      <br />
+      <router-link to="/bill"> <button>Ejecutar</button></router-link>
     </div>
   </main>
 </template>

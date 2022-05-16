@@ -13,6 +13,7 @@
 
 <script>
 export default {
+  name: "Projects",
   data() {
     return {
       projectInBill: this.projects,
