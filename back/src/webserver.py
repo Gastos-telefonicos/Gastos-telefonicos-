@@ -2,8 +2,8 @@ from flask import Flask, request
 from flask_cors import CORS
 
 from src.lib.utils import object_to_json
-
 from src.domain.phones import Phone
+from src.domain.services.bill_services import *
 
 
 def create_app(repositories):
@@ -19,13 +19,12 @@ def create_app(repositories):
         phone = repositories["phones"].get_doc()
         return object_to_json(phone)
 
-    @app.route("/api/doc", methods=["POST"])
+    @app.route("/api/docs", methods=["POST"])
     def phone_post():
         body = request.json
-        for phone in body:
-            phone = Phone(**phone)
-            repositories["phones"].save(phone)
-
-        return ""
+        pdf_invoice = Pdf_Invoice(body.pdf)
+        mobile_and_costs = pdf_invoice.get_text_from_all_pdf_pages()
+        print("THESE ARE MOBILES NUMBERS AND COST FROM FRONT ", mobile_and_costs)
+        return mobile_and_costs
 
     return app
