@@ -50,16 +50,34 @@ export default {
   },
   mounted() {},
   methods: {
-    async previewFiles(event) {
-      const settings = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/pdf",
-        },
-        body: event.target.files[0],
-      };
-      console.log(event.target.files[0]);
-      await fetch(`${config.config.API_PATH}/docs`, settings);
+    async previewFiles() {
+      //Obtenemos el pdf dado por el usuario
+      let selectedFile = document.getElementById("myFile").files;
+      if (selectedFile.length > 0) {
+        //Obtenemos el nombre del archivo
+        let fileToLoad = selectedFile[0];
+        //Creamos una referencia al archivo
+        let fileReader = new FileReader();
+        let base64;
+        //Leemos el archivo
+        fileReader.onload = async function (fileLoadedEvent) {
+          //Obtenemos el base64
+          base64 = fileLoadedEvent.target.result;
+          //Enviamos el base64 al servidor
+          const settings = {
+            method: "POST",
+            body: JSON.stringify({ pdf: base64 }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          };
+          await fetch(`${config.config.API_PATH}/docs`, settings);
+        };
+        //Leemos el archivo
+        fileReader.readAsDataURL(fileToLoad);
+      }
+      //Pasamos a la ruta /bill
+      this.$router.push("/bill");
     },
   },
 };
