@@ -2,3 +2,4 @@
 __pycache__
 .pytest_cache
 data/database.db
+temp.pdf
