@@ -30,6 +30,7 @@ class Pdf_Invoice:
             page_obj = pdf_reader.getPage(page)
             catched_text = page_obj.extractText()
             whole_text += catched_text
+        print(whole_text)
         list_of_phones_and_cost = self.get_mobile_numbers_and_their_cost(whole_text)
         pdf_file.close()
         return list_of_phones_and_cost
