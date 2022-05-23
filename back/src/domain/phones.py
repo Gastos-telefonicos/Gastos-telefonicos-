@@ -3,18 +3,16 @@ import PyPDF2
 
 
 class Phone:
-    def __init__(self, id, phone, costs, proyect):
-        self.id = id
+    def __init__(self, phone, project, description):
         self.phone = phone
-        self.costs = costs
-        self.proyect = proyect
+        self.project = project
+        self.description = description
 
     def to_dict(self):
         return {
-            "id": self.id,
             "phone": self.phone,
-            "costs": self.costs,
-            "proyect": self.proyect,
+            "project": self.project,
+            "description": self.description,
         }
 
 
@@ -30,11 +28,10 @@ class PhonesRepository:
 
     def init_tables(self):
         sql = """
-                create table if not exists phones (
-                    id VARCHAR PRIMARY KEY,
+                CREATE TABLE if not exists phones (
                     phone VARCHAR,
-                    costs INTERGER,
-                    proyect VARCHAR
+                    project VARCHAR,
+                    description VARCHAR
                 )
             """
         conn = self.create_conn()
@@ -42,7 +39,7 @@ class PhonesRepository:
         cursor.execute(sql)
         conn.commit()
 
-    def get_doc(self):
+    def get_phones(self):
         sql = """SELECT * FROM phones"""
         conn = self.create_conn()
         cursor = conn.cursor()
@@ -52,13 +49,12 @@ class PhonesRepository:
 
         phones = []
         for item in data:
-            contact = Phone(
-                id=item["id"],
+            phone = Phone(
                 phone=item["phone"],
-                costs=item["costs"],
-                proyect=item["proyect"],
+                project=item["project"],
+                description=item["description"],
             )
-            phones.append(contact)
+            phones.append(phone)
 
         return phones
 
@@ -71,11 +67,9 @@ class PhonesRepository:
         #     data = cursor.fetchone()
         #     phones = Phones(**data)
 
-        return phones
-
     def save(self, phones):
-        sql = """insert into phones (id, phone, costs, proyect) values (
-            :id, :phone, :costs, :proyect
+        sql = """INSERT INTO phones (phone, project, description) VALUES (
+            :phone, :project, :description
         ) """
         conn = self.create_conn()
         cursor = conn.cursor()

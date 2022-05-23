@@ -1,7 +1,6 @@
 from src.lib.utils import temp_file
 from src.webserver import create_app
 from src.domain.phones import PhonesRepository, Phone
-import json
 
 
 def test_should_return_phones_projects_and_costs():
