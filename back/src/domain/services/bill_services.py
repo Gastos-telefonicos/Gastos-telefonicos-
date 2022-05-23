@@ -10,8 +10,10 @@ class Pdf_Invoice:
     def convert_base64_to_pdf(self, base64_string):
         with open(self.pdf_path, "wb") as the_file:
             the_file.write(base64.b64decode(base64_string))
+
         pfd_num_and_cost = self.get_text_from_all_pdf_pages()
         object_list = self.convert_tuple_list_to_object_list(pfd_num_and_cost)
+        print(object_list)
         return object_list
 
     def get_mobile_numbers_and_their_cost(self, text):
