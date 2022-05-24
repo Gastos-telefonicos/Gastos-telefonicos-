@@ -20,7 +20,7 @@ def create_app(repositories):
         return object_to_json(phone)
 
     @app.route("/api/docs", methods=["POST"])
-    def phone_post():
+    def pdf_post():
         body = request.json
         base64_string = ""
         try:
@@ -30,5 +30,12 @@ def create_app(repositories):
         pdf_invoice = Pdf_Invoice("./temp.pdf")
         pdf_numbers_with_cost = pdf_invoice.convert_base64_to_pdf(base64_string)
         return jsonify(pdf_numbers_with_cost)
+
+    @app.route("/api/phones", methods=["POST"])
+    def phone_post():
+        body = request.json
+        phone = Phone(**body)
+        repositories["phones"].save(phone)
+        return ""
 
     return app
