@@ -26,13 +26,6 @@ def create_app(repositories):
         phone = repositories["phones"].get_phones()
         return object_to_json(phone)
 
-    @app.route("/api/phones", methods=["DELETE"])
-    def delete_phone():
-        body = request.json
-        phone = body["phone"]
-        repositories["phones"].delete_phones(phone)
-        return "", 200
-
     @app.route("/api/docs", methods=["POST"])
     def pdf_post():
         body = request.json
@@ -44,5 +37,19 @@ def create_app(repositories):
         pdf_invoice = Pdf_Invoice("./temp.pdf")
         pdf_numbers_with_cost = pdf_invoice.convert_base64_to_pdf(base64_string)
         return jsonify(pdf_numbers_with_cost)
+
+    @app.route("/api/phones/<phone>", methods=["PUT"])
+    def projets_put(phone):
+        body = request.json
+        phone = Phone(**body)
+        repositories["phones"].save(phone)
+        return "", 200
+
+    @app.route("/api/phones", methods=["POST"])
+    def phone_post():
+        body = request.json
+        phone = Phone(**body)
+        repositories["phones"].save(phone)
+        return ""
 
     return app
