@@ -1,9 +1,8 @@
 <template>
   <article>
-    <h3>{{ telephone }}</h3>
+    <h3>{{ phone }}</h3>
     <h3>{{ project }}</h3>
-    <h3>{{ owner }}</h3>
-    <h3>{{ price }}€</h3>
+    <h3>{{ description }}</h3>
     <button class="button" style="vertical-align: middle">
       <span>Eliminar</span>
     </button>
@@ -13,7 +12,7 @@
 <script>
 export default {
   props: {
-    telephone: {
+    phone: {
       type: String,
       required: true,
     },
@@ -21,11 +20,7 @@ export default {
       type: String,
       required: true,
     },
-    price: {
-      type: String,
-      required: true,
-    },
-    owner: {
+    description: {
       type: String,
       required: true,
     },
