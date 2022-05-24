@@ -3,13 +3,14 @@
     <h3>{{ phone }}</h3>
     <h3>{{ project }}</h3>
     <h3>{{ description }}</h3>
-    <button class="button" style="vertical-align: middle">
+    <button @click="deletePhone" class="button" style="vertical-align: middle">
       <span>Eliminar</span>
     </button>
   </article>
 </template>
 
 <script>
+import config from "../../config";
 export default {
   props: {
     phone: {
@@ -23,6 +24,32 @@ export default {
     description: {
       type: String,
       required: true,
+    },
+  },
+
+  data() {
+    return {
+      phoneData: this.phone,
+      descriptionData: this.description,
+      projectData: this.project,
+    };
+  },
+
+  methods: {
+    async deletePhone() {
+      const settings = {
+        method: "DELETE",
+        body: JSON.stringify({
+          phone: this.phoneData,
+          project: this.projectData,
+          description: this.descriptionData,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      await fetch(`${config.config.API_PATH}/phones`, settings);
+      location.reload();
     },
   },
 };
