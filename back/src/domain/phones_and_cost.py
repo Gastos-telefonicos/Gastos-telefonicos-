@@ -1,22 +1,19 @@
 import sqlite3
-import PyPDF2
 
 
-class Phone:
-    def __init__(self, phone, project, description):
+class PhoneCost:
+    def __init__(self, phone, cost):
         self.phone = phone
-        self.project = project
-        self.description = description
+        self.cost = cost
 
     def to_dict(self):
         return {
             "phone": self.phone,
-            "project": self.project,
-            "description": self.description,
+            "cost": self.cost,
         }
 
 
-class PhonesRepository:
+class PhonesAndCostRepository:
     def __init__(self, database_path):
         self.database_path = database_path
         self.init_tables()
@@ -28,10 +25,10 @@ class PhonesRepository:
 
     def init_tables(self):
         sql = """
-                CREATE TABLE if not exists phones (
-                    phone VARCHAR PRIMARY KEY,
-                    project VARCHAR,
-                    description VARCHAR
+                create table if not exists phones_cost (
+                    phone VARCHAR,
+                    cost VARCHAR
+            
                 )
             """
         conn = self.create_conn()
@@ -39,8 +36,8 @@ class PhonesRepository:
         cursor.execute(sql)
         conn.commit()
 
-    def get_phones(self):
-        sql = """SELECT * FROM phones"""
+    def get_phones_cost(self):
+        sql = """SELECT * FROM phones_cost"""
         conn = self.create_conn()
         cursor = conn.cursor()
         cursor.execute(sql)
@@ -49,12 +46,11 @@ class PhonesRepository:
 
         phones = []
         for item in data:
-            phone = Phone(
+            contact = PhoneCost(
                 phone=item["phone"],
-                project=item["project"],
-                description=item["description"],
+                cost=item["cost"],
             )
-            phones.append(phone)
+            phones.append(contact)
 
         return phones
 
@@ -67,21 +63,14 @@ class PhonesRepository:
         #     data = cursor.fetchone()
         #     phones = Phones(**data)
 
+        return phones
+
     def save(self, phones):
-        sql = """INSERT OR REPLACE INTO phones(phone, project, description) VALUES (
-            :phone, :project, :description
-        ) """
+        sql = """insert into phones_cost (phone, cost) values ( :phone, :cost) """
         conn = self.create_conn()
         cursor = conn.cursor()
         cursor.execute(
             sql,
             phones.to_dict(),
         )
-        conn.commit()
-
-    def delete_phones(self, phone):
-        sql = """DELETE FROM phones WHERE phone=:phone"""
-        conn = self.create_conn()
-        cursor = conn.cursor()
-        cursor.execute(sql, {"phone": phone})
         conn.commit()

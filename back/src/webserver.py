@@ -14,10 +14,24 @@ def create_app(repositories):
     def hello_world():
         return "...magic!"
 
+    @app.route("/api/phones", methods=["POST"])
+    def phone_post():
+        body = request.json
+        phone = Phone(**body)
+        repositories["phones"].save(phone)
+        return ""
+
     @app.route("/api/phones", methods=["GET"])
     def phones_get_doc():
         phone = repositories["phones"].get_phones()
         return object_to_json(phone)
+
+    @app.route("/api/phones", methods=["DELETE"])
+    def delete_phone():
+        body = request.json
+        phone = body["phone"]
+        repositories["phones"].delete_phones(phone)
+        return "", 200
 
     @app.route("/api/docs", methods=["POST"])
     def pdf_post():
@@ -37,12 +51,5 @@ def create_app(repositories):
         phone = Phone(**body)
         repositories["phones"].save(phone)
         return "", 200
-
-    @app.route("/api/phones", methods=["POST"])
-    def phone_post():
-        body = request.json
-        phone = Phone(**body)
-        repositories["phones"].save(phone)
-        return ""
 
     return app
