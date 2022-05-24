@@ -31,4 +31,11 @@ def create_app(repositories):
         pdf_numbers_with_cost = pdf_invoice.convert_base64_to_pdf(base64_string)
         return jsonify(pdf_numbers_with_cost)
 
+    @app.route("/api/phones/<phone>", methods=["PUT"])
+    def projets_put(phone):
+        body = request.json
+        phone = Phone(**body)
+        repositories["phones"].save(phone)
+        return "", 200
+
     return app

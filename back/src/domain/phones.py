@@ -29,7 +29,7 @@ class PhonesRepository:
     def init_tables(self):
         sql = """
                 CREATE TABLE if not exists phones (
-                    phone VARCHAR,
+                    phone VARCHAR PRIMARY KEY,
                     project VARCHAR,
                     description VARCHAR
                 )
@@ -68,7 +68,7 @@ class PhonesRepository:
         #     phones = Phones(**data)
 
     def save(self, phones):
-        sql = """INSERT INTO phones (phone, project, description) VALUES (
+        sql = """INSERT OR REPLACE INTO phones(phone, project, description) VALUES (
             :phone, :project, :description
         ) """
         conn = self.create_conn()
