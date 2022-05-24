@@ -1,5 +1,4 @@
 import sqlite3
-import PyPDF2
 
 
 class PhoneCost:
@@ -26,8 +25,8 @@ class PhonesAndCostRepository:
 
     def init_tables(self):
         sql = """
-                create table if not exists phonecost (
-                    phone VARCHAR 
+                create table if not exists phones_cost (
+                    phone VARCHAR,
                     cost VARCHAR
             
                 )
@@ -38,7 +37,7 @@ class PhonesAndCostRepository:
         conn.commit()
 
     def get_phones_cost(self):
-        sql = """SELECT * FROM phonecost"""
+        sql = """SELECT * FROM phones_cost"""
         conn = self.create_conn()
         cursor = conn.cursor()
         cursor.execute(sql)
@@ -67,7 +66,7 @@ class PhonesAndCostRepository:
         return phones
 
     def save(self, phones):
-        sql = """insert into phonecost (phone, cost) values ( :phone, :cost) """
+        sql = """insert into phones_cost (phone, cost) values ( :phone, :cost) """
         conn = self.create_conn()
         cursor = conn.cursor()
         cursor.execute(
