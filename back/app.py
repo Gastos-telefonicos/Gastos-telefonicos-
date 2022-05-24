@@ -3,7 +3,7 @@ from src.webserver import create_app
 from src.domain.phones import PhonesRepository
 
 
-database_path = "data/database.db"
+database_path = "data/database_phones.db"
 
 repositories = {
     "phones": PhonesRepository(database_path),

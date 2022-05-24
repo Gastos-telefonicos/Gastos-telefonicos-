@@ -4,18 +4,17 @@
   </header>
   <main>
     <Telephone
-      v-for="phone in telephones"
+      v-for="phone in phones"
       :key="phone.key"
-      :owner="phone.owner"
-      :price="phone.price"
+      :description="phone.description"
       :project="phone.project"
-      :telephone="phone.telephone"
+      :phone="phone.phone"
     />
   </main>
 </template>
 
-
 <script>
+import config from "../../config";
 import Telephone from "../components/Telephone.vue";
 export default {
   name: "Projects",
@@ -24,36 +23,23 @@ export default {
   },
   data() {
     return {
-      telephones: [
-        {
-          id: "1",
-          project: "GEN222321",
-          price: "22.12",
-          owner: "Josu",
-          telephone: "612432234",
-        },
-        {
-          id: "2",
-          project: "GEN214221",
-          price: "11.75",
-          owner: "Joseba",
-          telephone: "661358944",
-        },
-        {
-          id: "3",
-          project: "GEN122444",
-          price: "96.12",
-          owner: "Rocio",
-          telephone: "612832534",
-        },
-      ],
+      phones: [],
     };
   },
   mounted() {
     this.loadData();
   },
   methods: {
-    async loadData() {},
+    async loadData() {
+      const settings = {
+        method: "GET",
+      };
+      const response = await fetch(
+        `${config.config.API_PATH}/phones`,
+        settings
+      );
+      this.phones = await response.json();
+    },
   },
 };
 </script>
