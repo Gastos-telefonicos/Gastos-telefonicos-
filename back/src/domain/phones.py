@@ -78,3 +78,10 @@ class PhonesRepository:
             phones.to_dict(),
         )
         conn.commit()
+
+    def delete_phones(self, phone):
+        sql = """DELETE FROM phones WHERE phone=:phone"""
+        conn = self.create_conn()
+        cursor = conn.cursor()
+        cursor.execute(sql, {"phone": phone})
+        conn.commit()
