@@ -65,12 +65,12 @@ class PhonesAndCostRepository:
 
         return phones
 
-    def save(self, phones):
-        sql = """insert into phones_cost (phone, cost) values ( :phone, :cost) """
+    def save(self, phone_cost):
+        sql = """insert into phones_cost (phone, cost) values (:phone, :cost) """
         conn = self.create_conn()
         cursor = conn.cursor()
         cursor.execute(
             sql,
-            phones.to_dict(),
+            phone_cost.to_dict(),
         )
         conn.commit()
