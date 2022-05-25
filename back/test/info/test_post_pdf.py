@@ -15,4 +15,4 @@ def test_should_return_phones_projects_and_costs():
     response = client.post("/api/docs", json=body, content_type="application/json")
 
     assert response.status_code == 200
-    assert response.json == [{"phone": "747 458 001", "cost": "6,1322"}]
+    assert response.json == [{"phone": "747458001", "cost": "6,1322"}]

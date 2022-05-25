@@ -19,11 +19,13 @@
       Precio total ...................................................
       {{ totalPrice }}€
     </h2>
+    {{ test }}
   </main>
 </template>
 
 <script>
 import Project from "../components/Project.vue";
+import config from "@/config";
 import exportFromJSON from "export-from-json";
 export default {
   components: {
@@ -32,6 +34,7 @@ export default {
 
   data() {
     return {
+      test: [],
       totalPrice: 0,
       projects: [
         {
@@ -69,8 +72,16 @@ export default {
   },
   mounted() {
     this.totalPrice = this.getTotalPrice;
+    this.getFullData();
   },
   methods: {
+    async getFullData() {
+      const response = await fetch(
+        `${config.config.API_PATH}/phones/full-data`
+      );
+      const data = await response.json();
+      this.test = data;
+    },
     exportDataToExcel() {
       const data = this.projects.map((project) => {
         return {

@@ -13,12 +13,12 @@ def test_should_return_phone_project_description_and_cost():
     app_1 = create_app(repositories={"phones": phone_repository})
     client_one = app_1.test_client()
 
-    phone_one = Phone(phone="747 458 001", project="GEN1234", description="JOSEBA")
+    phone_one = Phone(phone="747458001", project="GEN1234", description="JOSEBA")
     phone_two = Phone(phone="1644541545", project="GEN5678", description="JOSU")
     phone_repository.save(phone_one)
     phone_repository.save(phone_two)
 
-    phone_cost_one = PhoneCost(phone="747 458 001", cost="40")
+    phone_cost_one = PhoneCost(phone="747458001", cost="40")
     phone_and_cost_repository.save(phone_cost_one)
     phone_cost_two = PhoneCost(phone="1644541545", cost="90")
     phone_and_cost_repository.save(phone_cost_two)
@@ -28,7 +28,7 @@ def test_should_return_phone_project_description_and_cost():
     # ASSERT (then)
     assert response_1.json == [
         {
-            "phone": "747 458 001",
+            "phone": "747458001",
             "project": "GEN1234",
             "description": "JOSEBA",
             "cost": "40",

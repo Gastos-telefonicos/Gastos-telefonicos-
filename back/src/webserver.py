@@ -37,7 +37,6 @@ def create_app(repositories):
     @app.route("/api/phones/full-data", methods=["GET"])
     def get_full_data_phone():
         phone = repositories["phones"].get_full_data_phone()
-
         return jsonify(phone)
 
     @app.route("/api/docs", methods=["POST"])

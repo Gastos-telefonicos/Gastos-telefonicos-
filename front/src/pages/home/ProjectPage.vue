@@ -95,6 +95,8 @@ main {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  overflow-y: scroll;
+  max-height: 78vh;
 }
 form {
   display: flex;

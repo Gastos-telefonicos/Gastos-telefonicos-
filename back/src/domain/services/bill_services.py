@@ -13,8 +13,11 @@ class Pdf_Invoice:
 
         pfd_num_and_cost = self.get_text_from_all_pdf_pages()
         object_list = self.convert_tuple_list_to_object_list(pfd_num_and_cost)
-        print(object_list)
-        return object_list
+        final_list = []
+        for object in object_list:
+            object["phone"] = object["phone"].replace(" ", "")
+            final_list.append(object)
+        return final_list
 
     def get_mobile_numbers_and_their_cost(self, text):
         pattern = r"([6|7]\d{2} \d{3} \d{3})\n(-?\d{1,4},\d{1,4}\n)*(\d{1,4},\d{1,4}) •"
@@ -30,7 +33,6 @@ class Pdf_Invoice:
             page_obj = pdf_reader.getPage(page)
             catched_text = page_obj.extractText()
             whole_text += catched_text
-        print(whole_text)
         list_of_phones_and_cost = self.get_mobile_numbers_and_their_cost(whole_text)
         pdf_file.close()
         return list_of_phones_and_cost

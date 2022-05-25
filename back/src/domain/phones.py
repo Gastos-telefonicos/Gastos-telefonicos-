@@ -85,7 +85,6 @@ class PhonesRepository:
         cursor.execute(sql)
         data = cursor.fetchall()
         phones = []
-
         for item in data:
             phones.append(
                 {
