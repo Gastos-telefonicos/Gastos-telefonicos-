@@ -1,5 +1,4 @@
 import sqlite3
-import PyPDF2
 
 
 class Phone:
@@ -58,15 +57,6 @@ class PhonesRepository:
 
         return phones
 
-        # def get_by_id(self, id):
-        #     sql = """SELECT * FROM phones WHERE id=:id"""
-        #     conn = self.create_conn()
-        #     cursor = conn.cursor()
-        #     cursor.execute(sql, {"id": id})
-
-        #     data = cursor.fetchone()
-        #     phones = Phones(**data)
-
     def save(self, phones):
         sql = """INSERT OR REPLACE INTO phones(phone, project, description) VALUES (
             :phone, :project, :description
@@ -85,3 +75,24 @@ class PhonesRepository:
         cursor = conn.cursor()
         cursor.execute(sql, {"phone": phone})
         conn.commit()
+
+    def get_full_data_phone(self):
+        sql = """SELECT phones.phone, phones.description, phones.project, phones_cost.cost 
+                 FROM phones
+                 INNER JOIN phones_cost ON phones.phone = phones_cost.phone"""
+        conn = self.create_conn()
+        cursor = conn.cursor()
+        cursor.execute(sql)
+        data = cursor.fetchall()
+        phones = []
+        for item in data:
+            phones.append(
+                {
+                    "phone": item["phone"],
+                    "description": item["description"],
+                    "project": item["project"],
+                    "cost": item["cost"],
+                }
+            )
+
+        return phones

@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import json
+from src.domain.phones_and_cost import PhoneCost, PhonesAndCostRepository
 from src.lib.utils import object_to_json
 from src.domain.phones import Phone
 from src.domain.services.bill_services import *
@@ -33,6 +34,11 @@ def create_app(repositories):
         repositories["phones"].delete_phones(phone)
         return "", 200
 
+    @app.route("/api/phones/full-data", methods=["GET"])
+    def get_full_data_phone():
+        phone = repositories["phones"].get_full_data_phone()
+        return jsonify(phone)
+
     @app.route("/api/docs", methods=["POST"])
     def pdf_post():
         body = request.json
@@ -43,6 +49,9 @@ def create_app(repositories):
             base64_string = body["pdf"]
         pdf_invoice = Pdf_Invoice("./temp.pdf")
         pdf_numbers_with_cost = pdf_invoice.convert_base64_to_pdf(base64_string)
+        for phone in pdf_numbers_with_cost:
+            phone_cost = PhoneCost(**phone)
+            repositories["phones_cost"].save(phone_cost)
         return jsonify(pdf_numbers_with_cost)
 
     @app.route("/api/phones/<phone>", methods=["PUT"])

@@ -1,11 +1,12 @@
 from src.lib.utils import temp_file
 from src.webserver import create_app
 from src.domain.phones import PhonesRepository, Phone
+from src.domain.phones_and_cost import PhonesAndCostRepository
 
 
 def test_should_return_phones_projects_and_costs():
-    phone_repository = PhonesRepository(temp_file())
-    app = create_app(repositories={"phones": phone_repository})
+    phone_repository = PhonesAndCostRepository(temp_file())
+    app = create_app(repositories={"phones_cost": phone_repository})
     client = app.test_client()
 
     body = {
@@ -14,4 +15,4 @@ def test_should_return_phones_projects_and_costs():
     response = client.post("/api/docs", json=body, content_type="application/json")
 
     assert response.status_code == 200
-    assert response.json == [{"phone": "747 458 001", "cost": "6,1322"}]
+    assert response.json == [{"phone": "747458001", "cost": "6,1322"}]
