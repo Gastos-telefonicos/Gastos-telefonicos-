@@ -6,11 +6,16 @@
     <h1 class="title">Proyectos</h1>
     <section class="proyectos">
       <button class="asign">Asignar proyectos</button>
-      <Project
-        :projects="project"
-        v-for="project in projects"
-        :key="project"
-      ></Project>
+      <article class="projects">
+        <div v-for="entries of projectEntries" :key="entries">
+          <h3>{{entries[0]}}</h3>    
+          <hr>
+          <div v-for="entry of entries[1]" :key="entry">
+            <p>{{entry.phone}}</p>
+            <p>{{entry.cost}}</p>
+            </div>
+        </div>
+      </article>
     </section>
     <button class="downloadButton" @click="exportDataToExcel">
       Descargar factura
@@ -19,68 +24,56 @@
       Precio total ...................................................
       {{ totalPrice }}€
     </h2>
-    {{ test }}
   </main>
 </template>
 
 <script>
-import Project from "../components/Project.vue";
+// import Project from "../components/Project.vue";
 import config from "@/config";
 import exportFromJSON from "export-from-json";
+// import _ from "lodash";
 export default {
-  components: {
-    Project,
-  },
+  components: {},
 
   data() {
     return {
-      test: [],
+      phones: [],
       totalPrice: 0,
-      projects: [
-        {
-          project: "Sin asignar",
-          totalPrice: 0,
-          phones: {
-            691722323: 22,
-            612232212: 15,
-            791123321: 20,
-          },
-          class: "no-assigned",
-        },
-        {
-          project: "GEN222442",
-          totalPrice: 0,
-          phones: {
-            691722323: 10,
-            612232212: 8,
-            791123321: 91,
-          },
-          class: "project",
-        },
-        {
-          project: "GEN22242442",
-          totalPrice: 0,
-          phones: {
-            691722323: 15,
-            612232212: 81,
-            791123321: 28,
-          },
-          class: "project",
-        },
-      ],
+      projects: [],
+      projectEntries:{}
     };
   },
   mounted() {
     this.totalPrice = this.getTotalPrice;
     this.getFullData();
   },
+ 
   methods: {
+    claudio(){
+      let projectEntries = Object.entries(this.projects)
+      this.projectEntries = projectEntries
+      // for(let entries of projectEntries){
+      //   console.log(entries[0])
+      // }
+    },
+    setNewObject() {
+      //Es de google,no lo entiendo mucho xD.
+      let result = this.phones.reduce(function (r, a) {
+        r[a.project] = r[a.project] || [];
+        r[a.project].push(a);
+        
+        return r;
+      }, Object.create(null));
+      this.projects = result;
+      this.claudio();
+    },
     async getFullData() {
       const response = await fetch(
         `${config.config.API_PATH}/phones/full-data`
       );
       const data = await response.json();
-      this.test = data;
+      this.phones = data;
+      this.setNewObject();
     },
     exportDataToExcel() {
       const data = this.projects.map((project) => {
