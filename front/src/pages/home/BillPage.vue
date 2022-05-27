@@ -8,11 +8,11 @@
       <button class="asign">Asignar proyectos</button>
       <article class="projects">
         <div v-for="entries of projectEntries" :key="entries">
-          <h3>{{entries[0]}}</h3>    
+          <h3 class="project" v-if="entries[0] != ''">{{entries[0]}}</h3>
+          <h3 class="no-assigned" v-else>Sin asignar</h3>    
           <hr>
           <div v-for="entry of entries[1]" :key="entry">
-            <p>{{entry.phone}}</p>
-            <p>{{entry.cost}}</p>
+            <Project :entry=entry></Project>
             </div>
         </div>
       </article>
@@ -28,12 +28,13 @@
 </template>
 
 <script>
-// import Project from "../components/Project.vue";
+import Project from "../components/Project.vue";
 import config from "@/config";
 import exportFromJSON from "export-from-json";
-// import _ from "lodash";
 export default {
-  components: {},
+  components: {
+    Project
+  },
 
   data() {
     return {
@@ -49,23 +50,20 @@ export default {
   },
  
   methods: {
-    claudio(){
+    getObjectEntries(){
       let projectEntries = Object.entries(this.projects)
       this.projectEntries = projectEntries
-      // for(let entries of projectEntries){
-      //   console.log(entries[0])
-      // }
+
     },
     setNewObject() {
       //Es de google,no lo entiendo mucho xD.
       let result = this.phones.reduce(function (r, a) {
         r[a.project] = r[a.project] || [];
         r[a.project].push(a);
-        
         return r;
       }, Object.create(null));
       this.projects = result;
-      this.claudio();
+      this.getObjectEntries();
     },
     async getFullData() {
       const response = await fetch(
@@ -89,14 +87,7 @@ export default {
     },
   },
   computed: {
-    getTotalPrice() {
-      const projects = this.projects;
-      let totalPrice = 0;
-      for (const project of projects) {
-        totalPrice = project.totalPrice + totalPrice;
-      }
-      return totalPrice;
-    },
+    
   },
 };
 </script>
@@ -188,4 +179,10 @@ button:hover::before {
   transition: all 250ms;
   overflow: hidden;
 }
+.no-assigned {
+  color: #ff0000;
+} 
+.project {
+  color: green;
+} 
 </style>

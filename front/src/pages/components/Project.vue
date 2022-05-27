@@ -1,12 +1,7 @@
 <template>
   <article>
-    <h2>{{ projectInBill.project }} - {{ projectInBill.totalPrice }}€</h2>
-    <p
-      :class="projectInBill.class"
-      v-for="(cost, phone) in projectInBill.phones"
-      :key="phone"
-    >
-      {{ phone }} ---{{ cost }}€
+    <p>
+      {{ entry.phone }} --- {{entry.description}} ---{{ entry.cost }}€
     </p>
   </article>
 </template>
@@ -21,7 +16,8 @@ export default {
     };
   },
   props: {
-    projects: {
+  
+    entry: {
       type: Object,
       required: true,
     },
@@ -67,10 +63,6 @@ h2 {
 p {
   margin-left: 2rem;
 }
-.no-assigned {
-  color: #ff0000;
-}
-.project {
-  color: green;
-}
+
+
 </style>

@@ -17,7 +17,7 @@ class Pdf_Invoice:
         for object in object_list:
             object["phone"] = object["phone"].replace(" ", "")
             final_list.append(object)
-        return final_list
+        return list(set(final_list))
 
     def get_mobile_numbers_and_their_cost(self, text):
         pattern = r"([6|7]\d{2} \d{3} \d{3})\n(-?\d{1,4},\d{1,4}\n)*(\d{1,4},\d{1,4}) •"
