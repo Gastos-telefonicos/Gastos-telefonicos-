@@ -24,23 +24,13 @@ export default {
   },
   mounted() {
     this.loadProjectsData;
-    this.projectInBill.totalPrice = this.getTotalProjectPrice;
   },
   methods: {
     loadProjectsData() {
       this.$emit("load", this.projectInBill);
     },
   },
-  computed: {
-    getTotalProjectPrice() {
-      const prices = this.projectInBill.phones;
-      let totalPrice = 0;
-      for (const price in prices) {
-        totalPrice = totalPrice + prices[price];
-      }
-      return totalPrice;
-    },
-  },
+ 
   emits: ["load"],
   watch: {
     project: {

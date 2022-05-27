@@ -1,6 +1,6 @@
 <template>
   <header>
-    <h1>Teléfonos</h1>
+    <h1>Proyectos</h1>
     <button class="green-button" @click="setActive">Añadir teléfono</button>
   </header>
   <main>

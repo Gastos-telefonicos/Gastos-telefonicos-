@@ -28,7 +28,6 @@ class PhonesAndCostRepository:
                 create table if not exists phones_cost (
                     phone VARCHAR,
                     cost VARCHAR
-            
                 )
             """
         conn = self.create_conn()

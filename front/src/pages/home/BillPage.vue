@@ -5,7 +5,7 @@
   <main>
     <h1 class="title">Proyectos</h1>
     <section class="proyectos">
-      <button class="asign">Asignar proyectos</button>
+      <button @click="sendToRoute('/projects')" class="asign">Proyectos</button>
       <article class="projects">
         <div v-for="entries of projectEntries" :key="entries">
           <h3 class="project" v-if="entries[0] != ''">{{entries[0]}}</h3>
@@ -20,10 +20,7 @@
     <button class="downloadButton" @click="exportDataToExcel">
       Descargar factura
     </button>
-    <h2 class="totalPrice">
-      Precio total ...................................................
-      {{ totalPrice }}€
-    </h2>
+    
   </main>
 </template>
 
@@ -31,6 +28,7 @@
 import Project from "../components/Project.vue";
 import config from "@/config";
 import exportFromJSON from "export-from-json";
+import {goTo} from '@/helpers/index';
 export default {
   components: {
     Project
@@ -41,7 +39,8 @@ export default {
       phones: [],
       totalPrice: 0,
       projects: [],
-      projectEntries:{}
+      projectEntries:{},
+      excelTest : []
     };
   },
   mounted() {
@@ -50,10 +49,15 @@ export default {
   },
  
   methods: {
+    sendToRoute(route){
+      goTo(route,this.$router);
+    },
     getObjectEntries(){
       let projectEntries = Object.entries(this.projects)
       this.projectEntries = projectEntries
-
+      for(let entry of projectEntries){
+        this.excelTest.push(entry)
+      }
     },
     setNewObject() {
       //Es de google,no lo entiendo mucho xD.
@@ -66,6 +70,7 @@ export default {
       this.getObjectEntries();
     },
     async getFullData() {
+      await new Promise(resolve => setTimeout(resolve, 3000));
       const response = await fetch(
         `${config.config.API_PATH}/phones/full-data`
       );
@@ -74,11 +79,19 @@ export default {
       this.setNewObject();
     },
     exportDataToExcel() {
-      const data = this.projects.map((project) => {
+      
+      const data = this.excelTest.map((project) => {
         return {
-          Proyecto: project.project,
-          Haber: 0,
-          Debe: project.totalPrice,
+          Proyecto: project[0],
+          Telefono: project[1].map((phone) => {
+            return phone.phone;
+          }),
+          Descripcion: project[1].map((phone) => {
+            return phone.description;
+          }),
+          Coste: project[1].map((phone) => {
+            return phone.cost;
+          }),
         };
       });
       const fileName = "download";
