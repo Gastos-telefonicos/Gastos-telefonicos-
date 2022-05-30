@@ -77,7 +77,7 @@ class PhonesRepository:
         conn.commit()
 
     def get_full_data_phone(self):
-        sql = """SELECT phones.phone, phones.description, phones.project, phones_cost.cost 
+        sql = """SELECT DISTINCT phones.phone, phones.description, phones.project, phones_cost.cost 
                  FROM phones
                  INNER JOIN phones_cost ON phones.phone = phones_cost.phone"""
         conn = self.create_conn()
