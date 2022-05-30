@@ -44,7 +44,7 @@ export default {
       totalPrice: 0,
       projects: [],
       projectEntries:{},
-      excelTest : [],
+      excelData : [],
       isLoading:false,
     };
   },
@@ -61,7 +61,7 @@ export default {
       let projectEntries = Object.entries(this.projects)
       this.projectEntries = projectEntries
       for(let entry of projectEntries){
-        this.excelTest.push(entry)
+        this.excelData.push(entry)
       }
     },
     setNewObject() {
@@ -75,8 +75,9 @@ export default {
       this.getObjectEntries();
     },
     async getFullData() {
+      
       this.isLoading = true;
-      await new Promise(resolve => setTimeout(resolve, 5000));
+      await new Promise(resolve => setTimeout(resolve, 2000));
       const response = await fetch(
         `${config.config.API_PATH}/phones/full-data`
       );
@@ -86,24 +87,18 @@ export default {
       this.isLoading = false;
     },
     exportDataToExcel() {
-      
-      const data = this.excelTest.map((project) => {
-        return {
-          Proyecto: project[0],
-          Telefono: project[1].map((phone) => {
-            return phone.phone;
-          }),
-          Descripcion: project[1].map((phone) => {
-            return phone.description;
-          }),
-          Coste: project[1].map((phone) => {
-            return phone.cost;
-          }),
-        };
+      const data = this.phones.map((project) => {
+        return{
+          Descripcion:project.description,
+          Teléfono:project.phone,
+          Proyecto:project.project
+        }
       });
+      
       const fileName = "download";
       const exportType = "xls";
       exportFromJSON({ data, fileName, exportType });
+      
     },
   },
   computed: {
