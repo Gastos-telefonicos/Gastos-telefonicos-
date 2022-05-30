@@ -1,12 +1,22 @@
 <template>
-  <article>
-    <h3>{{ phone }}</h3>
-    <h3>{{ project }}</h3>
-    <h3>{{ description }}</h3>
-    <button @click="deletePhone" class="button" style="vertical-align: middle">
-      <span>Eliminar</span>
-    </button>
-  </article>
+  <form>
+    <section class="form-data">
+      <label for="phone">Telefono: </label>
+      <input id="phoneNumber" v-model="phoneData" />
+      <label for="project">Proyecto: </label>
+      <input type="text" id="projectName" v-model="projectData" />
+      <label for="project">Description: </label>
+      <input type="text" id="descriptionName" v-model="descriptionData" />
+
+      <button class="button" @click="deletePhone">
+        <span>Eliminar</span>
+      </button>
+      <button class="button-modify" @click="onModifyButton">
+        <span>Modificar</span>
+      </button>
+    </section>
+  </form>
+  {{}}
 </template>
 
 <script>
@@ -49,20 +59,42 @@ export default {
         },
       };
       await fetch(`${config.config.API_PATH}/phones`, settings);
+
       location.reload();
+
+      alert("Contacto eliminado exitosamente");
+    },
+    async onModifyButton() {
+      let jsonPhone = JSON.stringify({
+        phone: this.phoneData,
+        project: this.projectData,
+        description: this.descriptionData,
+      });
+      const settings = {
+        method: "PUT",
+        body: jsonPhone,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      await fetch(`${config.config.API_PATH}/phones`, settings);
+
+      console.log(settings);
+      alert("Contacto guardado exitosamente");
     },
   },
 };
 </script>
 
 <style scoped>
-article {
+.form-data {
   display: flex;
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.4);
   gap: 1rem;
+  margin-bottom: 1em;
 }
-article h3 {
-  margin-left: 4rem;
+form {
+  margin-left: 1em;
 }
 button {
   margin-left: auto;
@@ -110,5 +142,19 @@ button {
 .button:hover span:after {
   opacity: 4;
   right: 0;
+}
+.button-modify {
+  display: inline-block;
+  border-radius: 7px;
+  border: none;
+  background: #2e7b67b8;
+  color: rgb(16, 9, 9);
+  font-family: inherit;
+  text-align: center;
+  font-size: 13px;
+  width: 10em;
+  padding: 1em;
+  transition: all 0.4s;
+  cursor: pointer;
 }
 </style>
