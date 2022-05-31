@@ -2,12 +2,11 @@
   <form>
     <section class="form-data">
       <label for="phone">Telefono: </label>
-      <input id="phoneNumber" v-model="phoneData" />
+      <input id="phoneNumber" v-model="phoneData" readonly />
       <label for="project">Proyecto: </label>
       <input type="text" id="projectName" v-model="projectData" />
       <label for="project">Description: </label>
       <input type="text" id="descriptionName" v-model="descriptionData" />
-
       <button class="button" @click="deletePhone">
         <span>Eliminar</span>
       </button>
@@ -156,5 +155,8 @@ button {
   padding: 1em;
   transition: all 0.4s;
   cursor: pointer;
+}
+#phoneNumber {
+  border: none;
 }
 </style>
