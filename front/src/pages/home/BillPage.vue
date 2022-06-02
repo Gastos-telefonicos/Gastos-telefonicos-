@@ -3,28 +3,27 @@
     <h1>Factura #312</h1>
   </header>
   <main>
-  <div v-if="isLoading" class="loading">
-  <h2>Procesando factura</h2>
-    <p>Loading&#8230;</p>
-  </div>
+    <div v-if="isLoading" class="loading">
+      <h2>Procesando factura</h2>
+      <p>Loading&#8230;</p>
+    </div>
     <h1 class="title">Proyectos</h1>
     <section class="proyectos">
       <button @click="sendToRoute('/projects')" class="asign">Proyectos</button>
       <article class="projects">
         <div v-for="entries of projectEntries" :key="entries">
-          <h3 class="project" v-if="entries[0] != ''">{{entries[0]}}</h3>
-          <h3 class="no-assigned" v-else>Sin asignar</h3>    
-          <hr>
+          <h3 class="project" v-if="entries[0] != ''">{{ entries[0] }}</h3>
+          <h3 class="no-assigned" v-else>Sin asignar</h3>
+          <hr />
           <div v-for="entry of entries[1]" :key="entry">
-            <Project :entry=entry></Project>
-            </div>
+            <Project :entry="entry"></Project>
+          </div>
         </div>
       </article>
     </section>
     <button class="downloadButton" @click="exportDataToExcel">
       Descargar factura
     </button>
-    
   </main>
 </template>
 
@@ -32,10 +31,10 @@
 import Project from "../components/Project.vue";
 import config from "@/config";
 import exportFromJSON from "export-from-json";
-import {goTo} from '@/helpers/index';
+import { goTo } from "@/helpers/index";
 export default {
   components: {
-    Project
+    Project,
   },
 
   data() {
@@ -43,41 +42,41 @@ export default {
       phones: [],
       totalPrice: 0,
       projects: [],
-      projectEntries:{},
-      excelData : [],
-      isLoading:false,
+      projectEntries: {},
+      excelData: [],
+      isLoading: false,
     };
   },
   mounted() {
     this.totalPrice = this.getTotalPrice;
     this.getFullData();
   },
- 
+
   methods: {
-    sendToRoute(route){
-      goTo(route,this.$router);
+    sendToRoute(route) {
+      goTo(route, this.$router);
     },
-    getObjectEntries(){
-      let projectEntries = Object.entries(this.projects)
-      this.projectEntries = projectEntries
-      for(let entry of projectEntries){
-        this.excelData.push(entry)
+    getObjectEntries() {
+      let projectEntries = Object.entries(this.projects);
+      this.projectEntries = projectEntries;
+      for (let entry of projectEntries) {
+        this.excelData.push(entry);
       }
     },
     setNewObject() {
-      //Es de google,no lo entiendo mucho xD.
-      let result = this.phones.reduce(function (r, a) {
-        r[a.project] = r[a.project] || [];
-        r[a.project].push(a);
-        return r;
+      let result = this.phones.reduce(function (projects, phone) {
+        console.log("R ES", projects);
+        console.log("A ES", phone);
+        projects[phone.project] = projects[phone.project] || [];
+        projects[phone.project].push(phone);
+        return projects;
       }, Object.create(null));
       this.projects = result;
       this.getObjectEntries();
     },
     async getFullData() {
-      
       this.isLoading = true;
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await new Promise((resolve) => setTimeout(resolve, 2000));
       const response = await fetch(
         `${config.config.API_PATH}/phones/full-data`
       );
@@ -88,22 +87,19 @@ export default {
     },
     exportDataToExcel() {
       const data = this.phones.map((project) => {
-        return{
-          Descripcion:project.description,
-          Teléfono:project.phone,
-          Proyecto:project.project
-        }
+        return {
+          Descripcion: project.description,
+          Teléfono: project.phone,
+          Proyecto: project.project,
+        };
       });
-      
+
       const fileName = "download";
       const exportType = "xls";
       exportFromJSON({ data, fileName, exportType });
-      
     },
   },
-  computed: {
-    
-  },
+  computed: {},
 };
 </script>
 
@@ -196,10 +192,10 @@ button:hover::before {
 }
 .no-assigned {
   color: #ff0000;
-} 
+}
 .project {
   color: green;
-} 
+}
 .loading {
   position: fixed;
   z-index: 999;
@@ -215,14 +211,14 @@ button:hover::before {
 
 /* Transparent Overlay */
 .loading:before {
-  content: '';
+  content: "";
   display: block;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.3);
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 /* :not(:required) hides these rules from IE9 and below */
@@ -236,7 +232,7 @@ button:hover::before {
 }
 
 .loading:not(:required):after {
-  content: '';
+  content: "";
   display: block;
   font-size: 10px;
   width: 1em;
@@ -248,8 +244,16 @@ button:hover::before {
   -o-animation: spinner 1500ms infinite linear;
   animation: spinner 1500ms infinite linear;
   border-radius: 0.5em;
-  -webkit-box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.5) -1.5em 0 0 0, rgba(0, 0, 0, 0.5) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
-  box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0, rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0,
+    rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0,
+    rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.5) -1.5em 0 0 0,
+    rgba(0, 0, 0, 0.5) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0,
+    rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+  box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0,
+    rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0,
+    rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0,
+    rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0,
+    rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
 }
 
 /* Animation */
