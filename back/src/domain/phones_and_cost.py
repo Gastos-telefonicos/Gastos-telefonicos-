@@ -65,7 +65,7 @@ class PhonesAndCostRepository:
         return phones
 
     def save(self, phone_cost):
-        sql = """INSERT OR REPLACE INTO phones_cost (phone, cost) VALUES (:phone, :cost) """
+        sql = """insert into phones_cost (phone, cost) values (:phone, :cost) """
         conn = self.create_conn()
         cursor = conn.cursor()
         cursor.execute(

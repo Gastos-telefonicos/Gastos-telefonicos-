@@ -1,9 +1,10 @@
 <template>
   <header>
     <h1>Proyectos</h1>
-    <button class="green-button" @click="setActive">Añadir teléfono</button>
+    <button class="return-button" @click="$router.go(-1)">↩</button>
   </header>
   <main>
+    <button class="add-button" @click="setActive">Añadir teléfono</button>
     <form action="" v-bind:class="{ actived: isActive, unactived: !isActive }">
       <button class="delete" @click.prevent="setUnactived">X</button>
       <label for="Número de telefono">Teléfono</label>
@@ -85,11 +86,17 @@ export default {
 <style scoped>
 header {
   width: 100%;
-  background: rgb(5, 210, 5);
+  background: rgba(255, 148, 248, 0.63);
   font-family: "Raleway";
+  color: rgb(120, 112, 112);
   padding: 1rem 0;
   font-size: 1em;
   text-align: center;
+}
+.add-button {
+  padding: 0;
+  margin: 6px;
+  margin-left: 80%;
 }
 main {
   display: flex;
@@ -123,14 +130,13 @@ form input {
   border-radius: 4px;
   max-width: 100%;
 }
-.green-button {
+.add-button {
   border: 2px solid rgba(0, 0, 0, 0.432);
   border-radius: 4px;
-  background: rgb(90, 255, 90);
-  color: black;
+  background: rgba(200, 74, 204, 0.36);
+  color: rgb(120, 112, 112);
   font-size: 1em;
   font-family: "Raleway";
-  font-weight: bold;
   cursor: pointer;
 }
 .unactived {
@@ -144,6 +150,19 @@ form input {
   border-radius: 4px;
   background: rgb(255, 90, 90);
   color: black;
+  font-size: 1em;
+  font-family: "Raleway";
+  font-weight: bold;
+  cursor: pointer;
+}
+.return-button {
+  display: flex;
+  flex-direction: row;
+  padding: 1px 10px;
+  margin-left: 1em;
+  border: none;
+  border-radius: 4px;
+  background: rgba(96, 50, 84, 0.705);
   font-size: 1em;
   font-family: "Raleway";
   font-weight: bold;

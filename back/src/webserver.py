@@ -54,11 +54,12 @@ def create_app(repositories):
             repositories["phones_cost"].save(phone_cost)
         return jsonify(pdf_numbers_with_cost)
 
-    @app.route("/api/phones/<phone>", methods=["PUT"])
-    def projets_put(phone):
+    @app.route("/api/phones", methods=["PUT"])
+    def projets_put():
         body = request.json
         phone = Phone(**body)
-        repositories["phones"].save(phone)
+        print(body)
+        repositories["phones"].save_by_phone(phone)
         return "", 200
 
     return app

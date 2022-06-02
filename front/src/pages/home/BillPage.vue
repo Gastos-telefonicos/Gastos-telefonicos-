@@ -108,7 +108,7 @@ export default {
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@600&display=swap");
 
 body,
-html {
+telefonicos html {
   margin: 0;
   padding: 0;
 }
