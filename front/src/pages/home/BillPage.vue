@@ -1,6 +1,6 @@
 <template>
   <header>
-    <h1>Factura #312</h1>
+    <h1>Factura</h1>
   </header>
   <main>
     <div v-if="isLoading" class="loading">
@@ -108,14 +108,15 @@ export default {
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@600&display=swap");
 
 body,
-telefonicos html {
+html {
   margin: 0;
   padding: 0;
 }
 header {
   width: 100%;
-  background: rgb(5, 210, 5);
   font-family: "Raleway";
+  background: #7b2e2fb8;
+  color: rgb(16, 9, 9);
   padding: 1rem 0;
   font-size: 1em;
   text-align: center;
@@ -175,7 +176,7 @@ button:hover::before {
 .downloadButton {
   margin-top: 1rem;
   float: right;
-  margin-right: 3rem;
+  margin-right: 1rem;
   padding: 15px 25px;
   border: unset;
   border-radius: 15px;
@@ -191,10 +192,11 @@ button:hover::before {
   overflow: hidden;
 }
 .no-assigned {
-  color: #ff0000;
+  color: #7b2e2fb8;
 }
 .project {
-  color: green;
+  color: rgba(201, 136, 111, 0.856);
+  margin-left: 1em;
 }
 .loading {
   position: fixed;
@@ -221,9 +223,7 @@ button:hover::before {
   background-color: rgba(0, 0, 0, 0.3);
 }
 
-/* :not(:required) hides these rules from IE9 and below */
 .loading:not(:required) {
-  /* hide "loading..." text */
   font: 0/0 a;
   color: transparent;
   text-shadow: none;
