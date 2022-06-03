@@ -60,8 +60,8 @@ def create_app(repositories):
         )
         return jsonify(pdf_numbers_with_cost)
 
-    @app.route("/api/phones/<phone>", methods=["PUT"])
-    def projets_put(phone):
+    @app.route("/api/phones", methods=["PUT"])
+    def projets_put():
         body = request.json
         phone = Phone(**body)
 

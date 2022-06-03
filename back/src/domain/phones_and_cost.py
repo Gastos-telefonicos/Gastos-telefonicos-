@@ -73,7 +73,7 @@ class PhonesAndCostRepository:
         conn.commit()
 
     def save(self, phone_cost):
-        sql = """INSERT INTO phones_cost (phone, cost) VALUES (:phone, :cost) """
+        sql = """insert into phones_cost (phone, cost) values (:phone, :cost) """
         conn = self.create_conn()
         cursor = conn.cursor()
         print(

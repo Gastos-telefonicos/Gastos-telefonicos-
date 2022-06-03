@@ -1,30 +1,32 @@
 <template>
   <header>
-    <h1>Factura #312</h1>
+    <h1>Factura</h1>
   </header>
   <main>
-  <div v-if="isLoading" class="loading">
-  <h2>Procesando factura</h2>
-    <p>Loading&#8230;</p>
-  </div>
+    <div v-if="isLoading" class="loading">
+      <h2>Procesando factura</h2>
+      <p>Loading&#8230;</p>
+    </div>
     <h1 class="title">Proyectos</h1>
+
     <section class="proyectos">
       <button @click="sendToRoute('/projects')" class="asign">Proyectos</button>
       <article class="projects">
-        <div v-for="entries of projectEntries" :key="entries">
-          <h3 class="project" v-if="entries[0] != ''">{{entries[0]}}</h3>
-          <h3 class="no-assigned" v-else>Sin asignar</h3>    
-          <hr>
-          <div v-for="entry of entries[1]" :key="entry">
-            <Project :entry=entry></Project>
-            </div>
+        <div v-for="project of fullProjects" :key="project.project">
+          <h3 class="project" v-if="project.project != ''">
+            {{ project.project }} -- {{ project.totalPrice }}€
+          </h3>
+          <h3 class="no-assigned" v-else>Sin asignar</h3>
+          <hr />
+          <div v-for="entry of project.info" :key="entry">
+            <Project :entry="entry"></Project>
+          </div>
         </div>
       </article>
     </section>
     <button class="downloadButton" @click="exportDataToExcel">
       Descargar factura
     </button>
-    
   </main>
 </template>
 
@@ -32,10 +34,10 @@
 import Project from "../components/Project.vue";
 import config from "@/config";
 import exportFromJSON from "export-from-json";
-import {goTo} from '@/helpers/index';
+import { goTo } from "@/helpers/index";
 export default {
   components: {
-    Project
+    Project,
   },
 
   data() {
@@ -43,41 +45,42 @@ export default {
       phones: [],
       totalPrice: 0,
       projects: [],
-      projectEntries:{},
-      excelData : [],
-      isLoading:false,
+      projectEntries: {},
+      excelData: [],
+      isLoading: false,
+      fullProjects: [],
+      totalProjectsPrices: 0,
     };
   },
   mounted() {
     this.totalPrice = this.getTotalPrice;
     this.getFullData();
   },
- 
+
   methods: {
-    sendToRoute(route){
-      goTo(route,this.$router);
+    sendToRoute(route) {
+      goTo(route, this.$router);
     },
-    getObjectEntries(){
-      let projectEntries = Object.entries(this.projects)
-      this.projectEntries = projectEntries
-      for(let entry of projectEntries){
-        this.excelData.push(entry)
+    getObjectEntries() {
+      let projectEntries = Object.entries(this.projects);
+      this.projectEntries = projectEntries;
+      for (let entry of projectEntries) {
+        this.excelData.push(entry);
       }
     },
     setNewObject() {
-      //Es de google,no lo entiendo mucho xD.
-      let result = this.phones.reduce(function (r, a) {
-        r[a.project] = r[a.project] || [];
-        r[a.project].push(a);
-        return r;
+      let result = this.phones.reduce(function (projects, phone) {
+        projects[phone.project] = projects[phone.project] || [];
+        projects[phone.project].push(phone);
+        return projects;
       }, Object.create(null));
       this.projects = result;
       this.getObjectEntries();
+      this.setFullProjects();
     },
     async getFullData() {
-      
       this.isLoading = true;
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await new Promise((resolve) => setTimeout(resolve, 2000));
       const response = await fetch(
         `${config.config.API_PATH}/phones/full-data`
       );
@@ -88,22 +91,39 @@ export default {
     },
     exportDataToExcel() {
       const data = this.phones.map((project) => {
-        return{
-          Descripcion:project.description,
-          Teléfono:project.phone,
-          Proyecto:project.project
-        }
+        return {
+          Descripcion: project.description,
+          Teléfono: project.phone,
+          Proyecto: project.project,
+        };
       });
-      
+
       const fileName = "download";
       const exportType = "xls";
       exportFromJSON({ data, fileName, exportType });
-      
+    },
+    setFullProjects() {
+      for (let key in this.projects) {
+        // eslint-disable-next-line no-unused-vars
+        let total = 0;
+        let totalAllPrices = 0;
+        let value = this.projects[key];
+        for (let entry of value) {
+          let cost = entry.cost.replace(",", ".");
+          let parsedCost = parseFloat(cost).toFixed(2);
+          total += parseFloat(parsedCost);
+        }
+        totalAllPrices = totalAllPrices + total;
+        this.fullProjects.push({
+          project: key,
+          info: this.projects[key],
+          totalPrice: total.toFixed(2),
+        });
+      }
+      console.log(this.fullProjects);
     },
   },
-  computed: {
-    
-  },
+  computed: {},
 };
 </script>
 
@@ -118,8 +138,9 @@ html {
 }
 header {
   width: 100%;
-  background: rgb(5, 210, 5);
   font-family: "Raleway";
+  background: #7b2e2fb8;
+  color: rgb(16, 9, 9);
   padding: 1rem 0;
   font-size: 1em;
   text-align: center;
@@ -179,7 +200,7 @@ button:hover::before {
 .downloadButton {
   margin-top: 1rem;
   float: right;
-  margin-right: 3rem;
+  margin-right: 1rem;
   padding: 15px 25px;
   border: unset;
   border-radius: 15px;
@@ -195,11 +216,12 @@ button:hover::before {
   overflow: hidden;
 }
 .no-assigned {
-  color: #ff0000;
-} 
+  color: #7b2e2fb8;
+}
 .project {
-  color: green;
-} 
+  color: rgba(201, 136, 111, 0.856);
+  margin-left: 1em;
+}
 .loading {
   position: fixed;
   z-index: 999;
@@ -215,19 +237,17 @@ button:hover::before {
 
 /* Transparent Overlay */
 .loading:before {
-  content: '';
+  content: "";
   display: block;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.3);
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
-/* :not(:required) hides these rules from IE9 and below */
 .loading:not(:required) {
-  /* hide "loading..." text */
   font: 0/0 a;
   color: transparent;
   text-shadow: none;
@@ -236,7 +256,7 @@ button:hover::before {
 }
 
 .loading:not(:required):after {
-  content: '';
+  content: "";
   display: block;
   font-size: 10px;
   width: 1em;
@@ -248,8 +268,16 @@ button:hover::before {
   -o-animation: spinner 1500ms infinite linear;
   animation: spinner 1500ms infinite linear;
   border-radius: 0.5em;
-  -webkit-box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.5) -1.5em 0 0 0, rgba(0, 0, 0, 0.5) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
-  box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0, rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0,
+    rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0,
+    rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.5) -1.5em 0 0 0,
+    rgba(0, 0, 0, 0.5) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0,
+    rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+  box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0,
+    rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0,
+    rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0,
+    rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0,
+    rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
 }
 
 /* Animation */

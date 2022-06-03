@@ -1,7 +1,7 @@
 <template>
   <article>
     <p>
-      {{ entry.phone }} --- {{entry.description}} ---{{ entry.cost }}€
+      ☏ {{ entry.phone }} - 👤 {{ entry.description }} - 💰{{ entry.cost }}€
     </p>
   </article>
 </template>
@@ -16,7 +16,6 @@ export default {
     };
   },
   props: {
-  
     entry: {
       type: Object,
       required: true,
@@ -30,7 +29,7 @@ export default {
       this.$emit("load", this.projectInBill);
     },
   },
- 
+
   emits: ["load"],
   watch: {
     project: {
@@ -53,6 +52,4 @@ h2 {
 p {
   margin-left: 2rem;
 }
-
-
 </style>

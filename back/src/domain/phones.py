@@ -57,8 +57,23 @@ class PhonesRepository:
 
         return phones
 
+    # def get_by_phone(self, phone):
+    #     sql = """SELECT * FROM phones WHERE phone=:phone"""
+    #     conn = self.create_conn()
+    #     cursor = conn.cursor()
+    #     cursor.execute(sql, {"phone": phone})
+
+    #     data = cursor.fetchone()
+
+    #     if data is not None:
+    #         phone = Phone(**data)
+    #     else:
+    #         phone = None
+
+    #     return phone
+
     def save(self, phones):
-        sql = """INSERT OR REPLACE INTO phones(phone, project, description) VALUES (
+        sql = """INSERT INTO phones(phone, project, description) VALUES (
             :phone, :project, :description
         ) """
         conn = self.create_conn()
@@ -66,6 +81,24 @@ class PhonesRepository:
         cursor.execute(
             sql,
             phones.to_dict(),
+        )
+        conn.commit()
+
+    def save_by_phone(self, phone):
+        tlf = phone.to_dict()
+        tlf["phone_id"] = tlf["phone"]
+        print(tlf)
+        sql = """UPDATE phones
+                     SET project= :project,
+                         description= :description,
+                         phone=:phone
+                         WHERE phone=:phone_id
+         """
+        conn = self.create_conn()
+        cursor = conn.cursor()
+        cursor.execute(
+            sql,
+            tlf,
         )
         conn.commit()
 

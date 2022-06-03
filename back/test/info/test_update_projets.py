@@ -19,7 +19,7 @@ def test_should_update_projets():
         "description": "JOSEBA",
     }
 
-    response = client.put("/api/phones/164454154", json=body)
+    response = client.put("/api/phones", json=body)
 
     assert response.status_code == 200
     response_get = client.get("/api/phones")

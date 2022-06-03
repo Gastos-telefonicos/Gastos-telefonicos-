@@ -91,7 +91,7 @@ h1 {
 .container {
   display: grid;
   place-content: center;
-  border: 5px dotted green;
+  border: 5px dotted #7b2e2fb8;
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.2);
   width: 50vw;
@@ -117,7 +117,7 @@ h1 {
   overflow: hidden;
   transition: all 0.3s;
   border-radius: 12px;
-  background-color: #a5ec48;
+  background-color: #7b2e2fb8;
   font-weight: bolder;
   box-shadow: 0 2px 0 2px #000;
 }
@@ -127,14 +127,14 @@ h1 {
   position: absolute;
   width: 100px;
   height: 120%;
-  background-color: #00ff4c;
+  background-color: #7b2e2fb8;
   top: 50%;
   transform: skewX(30deg) translate(-150%, -50%);
   transition: all 0.5s;
 }
 
 .btn:hover {
-  background-color: #4cf065;
+  background-color: #7b2e2fb8;
   color: #fff;
   box-shadow: 0 2px 0 2px #0d3b66;
 }
@@ -183,7 +183,7 @@ main {
   left: 0;
   margin: 0;
   padding: 0;
-  background: #38b602;
+  background: #7b2e2fb8;
   overflow: hidden;
 }
 .background li {
@@ -192,7 +192,7 @@ main {
   left: 45vw;
   width: 10px;
   height: 10px;
-  border: solid 1px #32a301;
+  border: solid 1px #7b2e2fb8;
   color: transparent;
   transform-origin: top left;
   transform: scale(0) rotate(0deg) translate(-50%, -50%);
@@ -220,14 +220,14 @@ undefined .background li:nth-child(0) {
   animation-delay: 6s;
   left: 62vw;
   top: 59vh;
-  border-color: #3dc802;
+  border-color: #7b2e2fb8;
 }
 
 .background li:nth-child(4) {
   animation-delay: 8s;
   left: 91vw;
   top: 43vh;
-  border-color: #3dc802;
+  border-color: #7b2e2fb8;
 }
 
 .background li:nth-child(5) {
@@ -240,14 +240,14 @@ undefined .background li:nth-child(0) {
   animation-delay: 12s;
   left: 16vw;
   top: 50vh;
-  border-color: #3dc802;
+  border-color: #7b2e2fb8;
 }
 
 .background li:nth-child(7) {
   animation-delay: 14s;
   left: 99vw;
   top: 62vh;
-  border-color: #3dc802;
+  border-color: #7b2e2fb8;
 }
 
 .background li:nth-child(8) {
@@ -272,7 +272,7 @@ undefined .background li:nth-child(0) {
   animation-delay: 22s;
   left: 71vw;
   top: 39vh;
-  border-color: #3dc802;
+  border-color: #7b2e2fb8;
 }
 
 .background li:nth-child(12) {
@@ -285,7 +285,7 @@ undefined .background li:nth-child(0) {
   animation-delay: 26s;
   left: 74vw;
   top: 18vh;
-  border-color: #3dc802;
+  border-color: #7b2e2fb8;
 }
 
 .background li:nth-child(14) {

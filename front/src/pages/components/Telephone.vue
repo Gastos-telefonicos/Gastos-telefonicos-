@@ -1,12 +1,23 @@
 <template>
-  <article>
-    <h3>{{ phone }}</h3>
-    <h3>{{ project }}</h3>
-    <h3>{{ description }}</h3>
-    <button @click="deletePhone" class="button" style="vertical-align: middle">
-      <span>Eliminar</span>
-    </button>
-  </article>
+  <form>
+    <section class="form-data">
+      <label for="phone">Telefono: </label>
+      <input id="phoneNumber" v-model="phoneData" readonly />
+      <label for="project">Proyecto: </label>
+      <input type="text" id="projectName" v-model="projectData" />
+      <label for="project">Description: </label>
+      <input type="text" id="descriptionName" v-model="descriptionData" />
+      <section>
+        <button class="button" @click="deletePhone">
+          <span>Eliminar</span>
+        </button>
+        <button class="button-modify" @click="onModifyButton">
+          <span>Modificar</span>
+        </button>
+      </section>
+    </section>
+  </form>
+  {{}}
 </template>
 
 <script>
@@ -49,20 +60,66 @@ export default {
         },
       };
       await fetch(`${config.config.API_PATH}/phones`, settings);
+
       location.reload();
+
+      alert("Contacto eliminado exitosamente");
+    },
+    async onModifyButton() {
+      let jsonPhone = JSON.stringify({
+        phone: this.phoneData,
+        project: this.projectData,
+        description: this.descriptionData,
+      });
+      const settings = {
+        method: "PUT",
+        body: jsonPhone,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      await fetch(`${config.config.API_PATH}/phones`, settings);
+
+      console.log(settings);
+      alert("Contacto guardado exitosamente");
     },
   },
 };
 </script>
 
 <style scoped>
-article {
+* {
+  padding: 0;
+  margin: 0;
+}
+.form-data {
   display: flex;
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.4);
+  border-radius: 4px;
   gap: 1rem;
+  margin-bottom: 1em;
+  margin-left: 2em;
+  margin-right: 3em;
+  padding: 1em 0 1em 1em;
 }
-article h3 {
-  margin-left: 4rem;
+@media (min-width: 320px) and (max-width: 1281px) {
+  .form-data {
+    display: grid;
+    padding: 5px;
+    padding-right: 1em;
+    margin-right: 3%;
+    margin-left: 1%;
+  }
+  .form-data form label[type="text"] {
+    grid-template-columns: 1fr 1fr;
+  }
+  .button {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+  }
+}
+form {
+  margin-left: 1em;
 }
 button {
   margin-left: auto;
@@ -70,14 +127,14 @@ button {
   border-radius: 50%;
   width: 4vw;
   font-size: 2rem;
-  background: rgba(255, 0, 0, 0.755);
+  background: rgba(205, 81, 108, 0.755);
 }
 .button {
   display: inline-block;
   border-radius: 7px;
   border: none;
-  background: #ff2020b8;
-  color: white;
+  background: #c55555b8;
+  color: rgb(21, 11, 11);
   font-family: inherit;
   text-align: center;
   font-size: 13px;
@@ -110,5 +167,52 @@ button {
 .button:hover span:after {
   opacity: 4;
   right: 0;
+}
+.button-modify {
+  display: inline-block;
+  border-radius: 7px;
+  border: none;
+  background: #7b2e2fb8;
+  color: rgb(16, 9, 9);
+  font-family: inherit;
+  text-align: center;
+  font-size: 13px;
+  width: 10em;
+  padding: 1em;
+  transition: all 0.4s;
+  cursor: pointer;
+}
+.button-modify span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.4s;
+}
+
+.button-modify span:after {
+  content: "✓";
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.7s;
+}
+
+.button-modify:hover span {
+  padding-right: 3.55em;
+}
+
+.button-modify:hover span:after {
+  opacity: 4;
+  right: 0;
+}
+
+#phoneNumber {
+  border: none;
+}
+input {
+  border-radius: 5px;
+  border: 1px solid rgba(204, 115, 51, 0.387);
+  text-align: center;
 }
 </style>
