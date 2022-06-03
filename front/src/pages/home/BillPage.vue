@@ -8,14 +8,17 @@
       <p>Loading&#8230;</p>
     </div>
     <h1 class="title">Proyectos</h1>
+
     <section class="proyectos">
       <button @click="sendToRoute('/projects')" class="asign">Proyectos</button>
       <article class="projects">
-        <div v-for="entries of projectEntries" :key="entries">
-          <h3 class="project" v-if="entries[0] != ''">{{ entries[0] }}</h3>
+        <div v-for="project of fullProjects" :key="project.project">
+          <h3 class="project" v-if="project.project != ''">
+            {{ project.project }} -- {{ project.totalPrice }}€
+          </h3>
           <h3 class="no-assigned" v-else>Sin asignar</h3>
           <hr />
-          <div v-for="entry of entries[1]" :key="entry">
+          <div v-for="entry of project.info" :key="entry">
             <Project :entry="entry"></Project>
           </div>
         </div>
@@ -45,6 +48,8 @@ export default {
       projectEntries: {},
       excelData: [],
       isLoading: false,
+      fullProjects: [],
+      totalProjectsPrices: 0,
     };
   },
   mounted() {
@@ -65,14 +70,13 @@ export default {
     },
     setNewObject() {
       let result = this.phones.reduce(function (projects, phone) {
-        console.log("R ES", projects);
-        console.log("A ES", phone);
         projects[phone.project] = projects[phone.project] || [];
         projects[phone.project].push(phone);
         return projects;
       }, Object.create(null));
       this.projects = result;
       this.getObjectEntries();
+      this.setFullProjects();
     },
     async getFullData() {
       this.isLoading = true;
@@ -97,6 +101,26 @@ export default {
       const fileName = "download";
       const exportType = "xls";
       exportFromJSON({ data, fileName, exportType });
+    },
+    setFullProjects() {
+      for (let key in this.projects) {
+        // eslint-disable-next-line no-unused-vars
+        let total = 0;
+        let totalAllPrices = 0;
+        let value = this.projects[key];
+        for (let entry of value) {
+          let cost = entry.cost.replace(",", ".");
+          let parsedCost = parseFloat(cost).toFixed(2);
+          total += parseFloat(parsedCost);
+        }
+        totalAllPrices = totalAllPrices + total;
+        this.fullProjects.push({
+          project: key,
+          info: this.projects[key],
+          totalPrice: total.toFixed(2),
+        });
+      }
+      console.log(this.fullProjects);
     },
   },
   computed: {},
