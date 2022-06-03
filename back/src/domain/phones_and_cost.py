@@ -1,4 +1,5 @@
 import sqlite3
+import json
 
 
 class PhoneCost:
@@ -24,11 +25,13 @@ class PhonesAndCostRepository:
         return conn
 
     def init_tables(self):
+
         sql = """
-                create table if not exists phones_cost (
+               
+                CREATE TABLE if not exists phones_cost (
                     phone VARCHAR,
                     cost VARCHAR
-                )
+                );
             """
         conn = self.create_conn()
         cursor = conn.cursor()
@@ -62,12 +65,21 @@ class PhonesAndCostRepository:
         #     data = cursor.fetchone()
         #     phones = Phones(**data)
 
-        return phones
-
-    def save(self, phone_cost):
-        sql = """INSERT OR REPLACE INTO phones_cost (phone, cost) VALUES (:phone, :cost) """
+    def delete_table(self):
+        query = """ DELETE FROM phones_cost"""
         conn = self.create_conn()
         cursor = conn.cursor()
+        cursor.execute(query)
+        conn.commit()
+
+    def save(self, phone_cost):
+        sql = """INSERT INTO phones_cost (phone, cost) VALUES (:phone, :cost) """
+        conn = self.create_conn()
+        cursor = conn.cursor()
+        print(
+            "***************************************************************** SAVE IN TABLE PHONE COST",
+            phone_cost,
+        )
         cursor.execute(
             sql,
             phone_cost.to_dict(),
