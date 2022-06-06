@@ -1,4 +1,4 @@
-# Aplicación semilla (backend)
+# Aplicación para la extracción e imputación de telefonos
 
 ## Puesta en marcha
 
