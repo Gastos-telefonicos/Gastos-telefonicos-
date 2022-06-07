@@ -76,10 +76,7 @@ class PhonesAndCostRepository:
         sql = """insert into phones_cost (phone, cost) values (:phone, :cost) """
         conn = self.create_conn()
         cursor = conn.cursor()
-        print(
-            "***************************************************************** SAVE IN TABLE PHONE COST",
-            phone_cost,
-        )
+
         cursor.execute(
             sql,
             phone_cost.to_dict(),

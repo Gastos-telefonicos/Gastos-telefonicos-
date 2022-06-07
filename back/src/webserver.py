@@ -42,8 +42,8 @@ def create_app(repositories):
     @app.route("/api/docs", methods=["POST"])
     def pdf_post():
         body = request.json
-
         base64_string = ""
+
         try:
             base64_string = body["pdf"].split(",")[1]
         except:
@@ -51,13 +51,11 @@ def create_app(repositories):
         pdf_invoice = Pdf_Invoice("./temp.pdf")
         pdf_numbers_with_cost = pdf_invoice.convert_base64_to_pdf(base64_string)
         repositories["phones_cost"].delete_table()
+
         for phone in pdf_numbers_with_cost:
             phone_cost = PhoneCost(**phone)
             repositories["phones_cost"].save(phone_cost)
-        print(
-            "******************************************************************* endpoint docs",
-            pdf_numbers_with_cost,
-        )
+
         return jsonify(pdf_numbers_with_cost)
 
     @app.route("/api/phones", methods=["PUT"])
@@ -65,7 +63,7 @@ def create_app(repositories):
         body = request.json
         phone = Phone(**body)
 
-        repositories["phones"].save(phone)
+        repositories["phones"].save_by_phone(phone)
         return "", 200
 
     return app

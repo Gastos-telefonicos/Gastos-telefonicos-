@@ -87,7 +87,6 @@ class PhonesRepository:
     def save_by_phone(self, phone):
         tlf = phone.to_dict()
         tlf["phone_id"] = tlf["phone"]
-        print(tlf)
         sql = """UPDATE phones
                      SET project= :project,
                          description= :description,
@@ -127,9 +126,4 @@ class PhonesRepository:
                     "cost": item["cost"],
                 }
             )
-        print(
-            "*************************************************************************** ",
-            len(phones),
-        )
-
         return phones

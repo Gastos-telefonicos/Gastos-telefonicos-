@@ -80,7 +80,7 @@ export default {
     },
     async getFullData() {
       this.isLoading = true;
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      // await new Promise((resolve) => setTimeout(resolve, 2000));
       const response = await fetch(
         `${config.config.API_PATH}/phones/full-data`
       );
@@ -119,8 +119,8 @@ export default {
           info: this.projects[key],
           totalPrice: total.toFixed(2),
         });
+        console.log(this.fullProjects);
       }
-      console.log(this.fullProjects);
     },
   },
   computed: {},
