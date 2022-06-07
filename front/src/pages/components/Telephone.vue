@@ -1,11 +1,11 @@
 <template>
   <form>
     <section class="form-data">
-      <label for="phone">Telefono: </label>
+      <label for="phone">Teléfono: </label>
       <input id="phoneNumber" v-model="phoneData" readonly />
       <label for="project">Proyecto: </label>
       <input type="text" id="projectName" v-model="projectData" />
-      <label for="project">Description: </label>
+      <label for="project">Descripción: </label>
       <input type="text" id="descriptionName" v-model="descriptionData" />
       <section>
         <button class="button" @click="deletePhone">
