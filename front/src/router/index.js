@@ -16,6 +16,15 @@ const routes = [
     name: "Projects",
     component: () => import("@/pages/home/ProjectPage.vue"),
   },
+  {
+    path: "/:catchAll(.*)",
+    name: "404",
+    component: () => import("@/pages/home/404Page.vue"),
+  },
+  // {
+  //   path: "*",
+  //   redirect: "/404",
+  // },
 ];
 
 const router = createRouter({

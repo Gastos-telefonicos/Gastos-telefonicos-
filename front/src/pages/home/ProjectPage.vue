@@ -60,8 +60,6 @@ export default {
   methods: {
     async loadData() {
       this.isLoading = true;
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-
       const settings = {
         method: "GET",
       };
@@ -166,6 +164,9 @@ form input {
 }
 .actived {
   visibility: visible;
+  position: absolute;
+  left: 0;
+  right: 0;
 }
 
 .delete {
