@@ -14,7 +14,7 @@
       <article class="projects">
         <div v-for="project of fullProjects" :key="project.project">
           <h3 class="project" v-if="project.project != ''">
-            {{ project.project }} -- {{ project.totalPrice }}€
+            {{ project.project }}-- {{ project.totalPrice }}€
           </h3>
           <h3 class="no-assigned" v-else>Sin asignar</h3>
           <hr />
@@ -45,6 +45,7 @@ export default {
       phones: [],
       totalPrice: 0,
       projects: [],
+      subaccount: [],
       projectEntries: {},
       excelData: [],
       isLoading: false,
@@ -95,6 +96,7 @@ export default {
           Descripcion: project.description,
           Teléfono: project.phone,
           Proyecto: project.project,
+          Subcuenta: project.subaccount,
         };
       });
 

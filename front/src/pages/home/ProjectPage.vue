@@ -100,6 +100,10 @@ export default {
 };
 </script>
 <style scoped>
+* {
+  padding: 0;
+  margin: 0;
+}
 header {
   width: 100%;
   background: #7b2e2fb8;
@@ -144,13 +148,12 @@ form {
   gap: 0.4rem;
   margin: auto;
   position: absolute;
-  padding: 2rem;
+  /* padding: 2rem; */
 }
 
 form input {
   border: 2px solid rgba(0, 0, 0, 0.432);
   border-radius: 4px;
-  max-width: 100%;
 }
 .add-button {
   border: none;

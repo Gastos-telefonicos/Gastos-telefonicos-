@@ -7,7 +7,7 @@
       <input type="text" id="projectName" v-model="projectData" />
       <label for="project">Descripción: </label>
       <input type="text" id="descriptionName" v-model="descriptionData" />
-      <label for="subaccount"> Subaccount: </label>
+      <label for="subaccount"> Subcuenta: </label>
       <input type="text" id="subaccountName" v-model="subaccountData" />
 
       <section>
@@ -106,11 +106,9 @@ export default {
   display: flex;
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.4);
   border-radius: 4px;
-  gap: 1rem;
-  margin-bottom: 1em;
-  margin-left: 2em;
-  margin-right: 3em;
-  padding: 1em 0 1em 1em;
+  gap: 0.3em;
+  margin: 1em 3em 1em 3em;
+  padding: 2em 0 2em 1em;
 }
 @media (min-width: 320px) and (max-width: 1281px) {
   .form-data {
