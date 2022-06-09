@@ -21,6 +21,8 @@
         <input type="text" v-model="newPhone.description" />
         <label for="Proyecto">Proyecto</label>
         <input type="text" v-model="newPhone.project" />
+        <label for="Subaccount">Subcuenta</label>
+        <input type="text" v-model="newPhone.subaccount" />
         <button class="green-button" @click="addNewTelephone">Añadir</button>
       </form>
     </section>
@@ -30,6 +32,7 @@
       :description="phone.description"
       :project="phone.project"
       :phone="phone.phone"
+      :subaccount="phone.subaccount"
     />
   </main>
 </template>
@@ -50,6 +53,7 @@ export default {
         description: "",
         project: "",
         phone: "",
+        subaccount: "",
       },
       isActive: false,
     };

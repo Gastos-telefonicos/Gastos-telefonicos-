@@ -7,6 +7,9 @@
       <input type="text" id="projectName" v-model="projectData" />
       <label for="project">Descripción: </label>
       <input type="text" id="descriptionName" v-model="descriptionData" />
+      <label for="subaccount"> Subaccount: </label>
+      <input type="text" id="subaccountName" v-model="subaccountData" />
+
       <section>
         <button class="button" @click="deletePhone">
           <span>Eliminar</span>
@@ -36,6 +39,10 @@ export default {
       type: String,
       required: true,
     },
+    subaccount: {
+      type: String,
+      required: true,
+    },
   },
 
   data() {
@@ -43,6 +50,7 @@ export default {
       phoneData: this.phone,
       descriptionData: this.description,
       projectData: this.project,
+      subaccountData: this.subaccount,
     };
   },
 
@@ -54,6 +62,7 @@ export default {
           phone: this.phoneData,
           project: this.projectData,
           description: this.descriptionData,
+          subaccount: this.subaccountData,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -70,6 +79,7 @@ export default {
         phone: this.phoneData,
         project: this.projectData,
         description: this.descriptionData,
+        subaccount: this.subaccountData,
       });
       const settings = {
         method: "PUT",
