@@ -10,13 +10,16 @@ def test_should_update_projets():
     app = create_app(repositories={"phones": phone_repository})
     client = app.test_client()
 
-    phone_one = Phone(phone="164454154", project="GEN1234", description="JOSEBA")
+    phone_one = Phone(
+        phone="164454154", project="GEN1234", description="JOSEBA", subaccount="628"
+    )
     phone_repository.save(phone_one)
 
     body = {
         "phone": "164454154",
         "project": "GEN4567",
         "description": "JOSEBA",
+        "subaccount": "628",
     }
 
     response = client.put("/api/phones", json=body)
@@ -29,5 +32,6 @@ def test_should_update_projets():
             "phone": "164454154",
             "project": "GEN4567",
             "description": "JOSEBA",
+            "subaccount": "628",
         }
     ]

@@ -2,16 +2,18 @@ import sqlite3
 
 
 class Phone:
-    def __init__(self, phone, project, description):
+    def __init__(self, phone, project, description, subaccount):
         self.phone = phone
         self.project = project
         self.description = description
+        self.subaccount = subaccount
 
     def to_dict(self):
         return {
             "phone": self.phone,
             "project": self.project,
             "description": self.description,
+            "subaccount": self.subaccount,
         }
 
 
@@ -30,7 +32,8 @@ class PhonesRepository:
                 CREATE TABLE if not exists phones (
                     phone VARCHAR PRIMARY KEY,
                     project VARCHAR,
-                    description VARCHAR
+                    description VARCHAR,
+                    subaccount VARCHAR
                 )
             """
         conn = self.create_conn()
@@ -52,6 +55,7 @@ class PhonesRepository:
                 phone=item["phone"],
                 project=item["project"],
                 description=item["description"],
+                subaccount=item["subaccount"],
             )
             phones.append(phone)
 
@@ -73,8 +77,8 @@ class PhonesRepository:
     #     return phone
 
     def save(self, phones):
-        sql = """INSERT INTO phones(phone, project, description) VALUES (
-            :phone, :project, :description
+        sql = """INSERT INTO phones(phone, project, description, subaccount) VALUES (
+            :phone, :project, :description, :subaccount
         ) """
         conn = self.create_conn()
         cursor = conn.cursor()
@@ -90,6 +94,7 @@ class PhonesRepository:
         sql = """UPDATE phones
                      SET project= :project,
                          description= :description,
+                         subaccount= :subaccount,
                          phone=:phone
                          WHERE phone=:phone_id
          """
@@ -109,7 +114,7 @@ class PhonesRepository:
         conn.commit()
 
     def get_full_data_phone(self):
-        sql = """SELECT phones.phone, phones.description, phones.project, phones_cost.cost 
+        sql = """SELECT phones.phone, phones.description, phones.project, phones.subaccount, phones_cost.cost
                  FROM phones
                  INNER JOIN phones_cost ON phones.phone = phones_cost.phone"""
         conn = self.create_conn()
@@ -124,6 +129,7 @@ class PhonesRepository:
                     "description": item["description"],
                     "project": item["project"],
                     "cost": item["cost"],
+                    "subaccount": item["subaccount"],
                 }
             )
         return phones
