@@ -1,10 +1,7 @@
 <template>
   <article>
     <p>
-      ☏ {{ entry.phone }} - 👤 {{ entry.description }} - 📃{{
-        entry.subaccount
-      }}
-      - 💰{{ entry.cost }}€
+      ☏ {{ entry.phone }} - 👤 {{ entry.description }} - 💰{{ entry.cost }}€
     </p>
   </article>
 </template>
