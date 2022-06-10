@@ -12,7 +12,6 @@ class Pdf_Invoice:
             the_file.write(base64.b64decode(base64_string))
 
         pfd_num_and_cost = self.get_text_from_all_pdf_pages()
-        print(pfd_num_and_cost)
         object_list = self.convert_tuple_list_to_object_list(pfd_num_and_cost)
         final_list = []
         for object in object_list:

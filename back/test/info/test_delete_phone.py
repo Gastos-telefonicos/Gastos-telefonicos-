@@ -8,14 +8,23 @@ def test_should_delete_a_phone():
     app = create_app(repositories={"phones": phone_repository})
     client = app.test_client()
 
-    phone_one = Phone(phone="1644541544", project="GEN1234", description="JOSEBA")
-    phone_two = Phone(phone="1644541545", project="GEN5678", description="JOSU")
+    phone_one = Phone(
+        phone="1644541544", project="GEN1234", description="JOSEBA", subaccount="628"
+    )
+    phone_two = Phone(
+        phone="1644541545", project="GEN5678", description="JOSU", subaccount="628"
+    )
     phone_repository.save(phone_one)
     phone_repository.save(phone_two)
 
     # ACT (when)
 
-    body = {"phone": "1644541544", "project": "GEN1234", "description": "JOSEBA"}
+    body = {
+        "phone": "1644541544",
+        "project": "GEN1234",
+        "description": "JOSEBA",
+        "subaccount": "628",
+    }
 
     response_delete = client.delete("/api/phones", json=body)
     assert response_delete.status_code == 200
@@ -27,5 +36,6 @@ def test_should_delete_a_phone():
             "phone": "1644541545",
             "project": "GEN5678",
             "description": "JOSU",
+            "subaccount": "628",
         },
     ]

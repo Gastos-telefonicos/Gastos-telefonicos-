@@ -8,7 +8,12 @@ def test_should_save_phone():
     app = create_app(repositories={"phones": phone_repository})
     client = app.test_client()
 
-    body = {"phone": "747 458 001", "description": "JOSU", "project": "GEN2231"}
+    body = {
+        "phone": "747 458 001",
+        "description": "JOSU",
+        "project": "GEN2231",
+        "subaccount": "628",
+    }
 
     response = client.post("/api/phones", json=body)
 
@@ -20,5 +25,10 @@ def test_should_save_phone():
 
     phones = response_get.json
     assert phones == [
-        {"phone": "747 458 001", "description": "JOSU", "project": "GEN2231"}
+        {
+            "phone": "747 458 001",
+            "description": "JOSU",
+            "project": "GEN2231",
+            "subaccount": "628",
+        }
     ]

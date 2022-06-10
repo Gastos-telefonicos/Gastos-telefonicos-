@@ -7,6 +7,9 @@
       <input type="text" id="projectName" v-model="projectData" />
       <label for="project">Descripción: </label>
       <input type="text" id="descriptionName" v-model="descriptionData" />
+      <label for="subaccount"> Subcuenta: </label>
+      <input type="text" id="subaccountName" v-model="subaccountData" />
+
       <section>
         <button class="button" @click="deletePhone">
           <span>Eliminar</span>
@@ -36,6 +39,10 @@ export default {
       type: String,
       required: true,
     },
+    subaccount: {
+      type: String,
+      required: true,
+    },
   },
 
   data() {
@@ -43,6 +50,7 @@ export default {
       phoneData: this.phone,
       descriptionData: this.description,
       projectData: this.project,
+      subaccountData: this.subaccount,
     };
   },
 
@@ -54,6 +62,7 @@ export default {
           phone: this.phoneData,
           project: this.projectData,
           description: this.descriptionData,
+          subaccount: this.subaccountData,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -70,6 +79,7 @@ export default {
         phone: this.phoneData,
         project: this.projectData,
         description: this.descriptionData,
+        subaccount: this.subaccountData,
       });
       const settings = {
         method: "PUT",
@@ -79,8 +89,6 @@ export default {
         },
       };
       await fetch(`${config.config.API_PATH}/phones`, settings);
-
-      console.log(settings);
       alert("Contacto guardado exitosamente");
     },
   },
@@ -96,11 +104,9 @@ export default {
   display: flex;
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.4);
   border-radius: 4px;
-  gap: 1rem;
-  margin-bottom: 1em;
-  margin-left: 2em;
-  margin-right: 3em;
-  padding: 1em 0 1em 1em;
+  gap: 0.3em;
+  margin: 1em 3em 1em 3em;
+  padding: 2em 0 2em 1em;
 }
 @media (min-width: 320px) and (max-width: 1281px) {
   .form-data {

@@ -13,8 +13,12 @@ def test_should_return_phone_project_description_and_cost():
     app_1 = create_app(repositories={"phones": phone_repository})
     client_one = app_1.test_client()
 
-    phone_one = Phone(phone="747458001", project="GEN1234", description="JOSEBA")
-    phone_two = Phone(phone="1644541545", project="GEN5678", description="JOSU")
+    phone_one = Phone(
+        phone="747458001", project="GEN1234", description="JOSEBA", subaccount="628"
+    )
+    phone_two = Phone(
+        phone="1644541545", project="GEN5678", description="JOSU", subaccount="628"
+    )
     phone_repository.save(phone_one)
     phone_repository.save(phone_two)
 
@@ -31,12 +35,14 @@ def test_should_return_phone_project_description_and_cost():
             "phone": "747458001",
             "project": "GEN1234",
             "description": "JOSEBA",
+            "subaccount": "628",
             "cost": "40",
         },
         {
             "phone": "1644541545",
             "project": "GEN5678",
             "description": "JOSU",
+            "subaccount": "628",
             "cost": "90",
         },
     ]
