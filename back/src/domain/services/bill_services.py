@@ -30,12 +30,12 @@ class Pdf_Invoice:
 
     def get_text_from_all_pdf_pages(self):
         pdf_file = open(self.pdf_path, "rb")
-        pdf_reader = PyPDF2.PdfFileReader(pdf_file)
-        num_pages = pdf_reader.getNumPages()
+        pdf_reader = PyPDF2.PdfReader(pdf_file)
+        num_pages = len(pdf_reader.pages)
         whole_text = ""
         for page in range(num_pages):
-            page_obj = pdf_reader.getPage(page)
-            catched_text = page_obj.extractText()
+            page_obj = pdf_reader.pages[page]
+            catched_text = page_obj.extract_text()
             whole_text += catched_text
         list_of_phones_and_cost = self.get_mobile_numbers_and_their_cost(whole_text)
         pdf_file.close()
