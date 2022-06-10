@@ -89,8 +89,6 @@ export default {
         },
       };
       await fetch(`${config.config.API_PATH}/phones`, settings);
-
-      console.log(settings);
       alert("Contacto guardado exitosamente");
     },
   },

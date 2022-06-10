@@ -91,7 +91,6 @@ export default {
     },
     setActive() {
       this.isActive = true;
-      console.log(this.isActive);
     },
     setUnactived() {
       this.isActive = false;

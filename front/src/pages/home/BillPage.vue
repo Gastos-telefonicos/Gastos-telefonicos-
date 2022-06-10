@@ -121,7 +121,6 @@ export default {
           info: this.projects[key],
           totalPrice: total.toFixed(2),
         });
-        console.log(this.fullProjects);
       }
     },
   },
