@@ -1,6 +1,6 @@
 <template>
   <header>
-    <h1>Proyectos</h1>
+    <h1>Lista de teléfonos</h1>
     <button class="return-button" @click="$router.go(-1)">↩</button>
   </header>
   <main>
@@ -106,7 +106,7 @@ export default {
 header {
   width: 100%;
   background: #7b2e2fb8;
-  font-family: "Raleway";
+
   color: rgb(35, 29, 29);
   padding: 1rem 0;
   font-size: 1em;
@@ -160,7 +160,6 @@ form input {
   background: #cb8565a5;
   color: rgb(35, 29, 29);
   font-size: 12px;
-  font-family: "Raleway";
   cursor: pointer;
   padding: 1em 2em;
 }
@@ -181,7 +180,6 @@ form input {
   background: rgb(255, 90, 90);
   color: black;
   font-size: 1em;
-  font-family: "Raleway";
   font-weight: bold;
   cursor: pointer;
 }
@@ -194,7 +192,6 @@ form input {
   border-radius: 4px;
   background: rgba(224, 190, 156, 0.705);
   font-size: 1em;
-  font-family: "Raleway";
   font-weight: bold;
   cursor: pointer;
 }

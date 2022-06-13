@@ -24,7 +24,9 @@
           </div>
         </div>
       </article>
-      <button @click="sendToRoute('/projects')" class="asign">Proyectos</button>
+      <button @click="sendToRoute('/telefonos')" class="asign">
+        Proyectos
+      </button>
       <article class="projects">
         <div v-for="project of fullProjects" :key="project.project">
           <h3 class="project" v-if="project.project != ''">
@@ -169,7 +171,7 @@ main .title {
   margin-left: 1rem;
 }
 .proyectos {
-  height: 55vh;
+  height: 50vh;
   overflow-y: scroll;
 }
 .asign {

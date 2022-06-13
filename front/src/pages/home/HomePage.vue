@@ -107,8 +107,6 @@ h1 {
 
 .btn {
   padding: 1.1em 2em;
-  background: none;
-  font-family: Roboto;
   border: 2px solid #fff;
   font-size: 3vh;
   color: #131313;

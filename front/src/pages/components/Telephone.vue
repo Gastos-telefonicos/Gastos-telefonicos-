@@ -141,7 +141,6 @@ button {
   border: none;
   background: #c55555b8;
   color: rgb(21, 11, 11);
-  font-family: inherit;
   text-align: center;
   font-size: 13px;
   width: 10em;
@@ -180,7 +179,6 @@ button {
   border: none;
   background: #7b2e2fb8;
   color: rgb(16, 9, 9);
-  font-family: inherit;
   text-align: center;
   font-size: 13px;
   width: 10em;
