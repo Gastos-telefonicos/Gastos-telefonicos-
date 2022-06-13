@@ -1,7 +1,9 @@
 <template>
   <article>
     <p>
-      ☏ {{ entry.phone }} - 👤 {{ entry.description }} - 💰{{ entry.cost }}€
+      ☏ {{ entry.no_assigned_phone }} - 👤 {{ entry.description }} - 💰{{
+        entry.cost
+      }}€
     </p>
   </article>
 </template>

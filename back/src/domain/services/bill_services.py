@@ -12,6 +12,7 @@ class Pdf_Invoice:
             the_file.write(base64.b64decode(base64_string))
 
         pfd_num_and_cost = self.get_text_from_all_pdf_pages()
+        print(pfd_num_and_cost)
         object_list = self.convert_tuple_list_to_object_list(pfd_num_and_cost)
         final_list = []
         for object in object_list:
@@ -29,12 +30,12 @@ class Pdf_Invoice:
 
     def get_text_from_all_pdf_pages(self):
         pdf_file = open(self.pdf_path, "rb")
-        pdf_reader = PyPDF2.PdfReader(pdf_file)
-        num_pages = len(pdf_reader.pages)
+        pdf_reader = PyPDF2.PdfFileReader(pdf_file)
+        num_pages = pdf_reader.getNumPages()
         whole_text = ""
         for page in range(num_pages):
-            page_obj = pdf_reader.pages[page]
-            catched_text = page_obj.extract_text()
+            page_obj = pdf_reader.getPage(page)
+            catched_text = page_obj.extractText()
             whole_text += catched_text
         list_of_phones_and_cost = self.get_mobile_numbers_and_their_cost(whole_text)
         pdf_file.close()

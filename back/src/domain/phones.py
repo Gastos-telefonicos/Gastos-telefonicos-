@@ -114,9 +114,9 @@ class PhonesRepository:
         conn.commit()
 
     def get_full_data_phone(self):
-        sql = """SELECT phones.phone, phones.description, phones.project, phones.subaccount, phones_cost.cost
-                 FROM phones
-                 INNER JOIN phones_cost ON phones.phone = phones_cost.phone"""
+        sql = """SELECT phones.phone,phones_cost.phone AS phone_not_assigned,cost,description,project,subaccount
+	                FROM phones_cost
+                        LEFT OUTER JOIN phones ON phones.phone = phones_cost.phone"""
         conn = self.create_conn()
         cursor = conn.cursor()
         cursor.execute(sql)
@@ -128,6 +128,7 @@ class PhonesRepository:
                     "phone": item["phone"],
                     "description": item["description"],
                     "project": item["project"],
+                    "no_assigned_phone": item["phone_not_assigned"],
                     "cost": item["cost"],
                     "subaccount": item["subaccount"],
                 }

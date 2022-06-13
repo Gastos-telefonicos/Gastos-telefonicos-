@@ -10,6 +10,20 @@
     <h1 class="title">Proyectos</h1>
 
     <section class="proyectos">
+      <article class="danger-projects">
+        <div v-for="project of fullProjects" :key="project.project">
+          <div v-if="project.project == 'null'">
+            <h3 class="danger-project">
+              Faltan por crear --
+              {{ project.totalPrice }}€
+            </h3>
+            <hr />
+            <div v-for="entry of project.info" :key="entry">
+              <Project :entry="entry"></Project>
+            </div>
+          </div>
+        </div>
+      </article>
       <button @click="sendToRoute('/projects')" class="asign">Proyectos</button>
       <article class="projects">
         <div v-for="project of fullProjects" :key="project.project">
@@ -75,7 +89,10 @@ export default {
         projects[phone.project].push(phone);
         return projects;
       }, Object.create(null));
+
       this.projects = result;
+      console.log(this.phones);
+
       this.getObjectEntries();
       this.setFullProjects();
     },
@@ -106,7 +123,6 @@ export default {
     },
     setFullProjects() {
       for (let key in this.projects) {
-        // eslint-disable-next-line no-unused-vars
         let total = 0;
         let totalAllPrices = 0;
         let value = this.projects[key];
@@ -139,7 +155,6 @@ html {
 }
 header {
   width: 100%;
-  font-family: "Raleway";
   background: #7b2e2fb8;
   color: rgb(16, 9, 9);
   padding: 1rem 0;
@@ -221,6 +236,14 @@ button:hover::before {
 }
 .project {
   color: rgba(201, 136, 111, 0.856);
+  margin-left: 1em;
+}
+.danger-projects {
+  background-color: rgba(255, 0, 0, 0.171);
+  padding: 0.4rem 0 1rem 0;
+}
+.danger-project {
+  color: rgba(243, 13, 13, 0.856);
   margin-left: 1em;
 }
 .loading {
