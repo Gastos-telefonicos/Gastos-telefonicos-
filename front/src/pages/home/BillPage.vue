@@ -1,6 +1,7 @@
 <template>
   <header>
-    <h1>Factura</h1>
+    <h1>Contabilidad de facturas telefónicas</h1>
+    <h2>Factura</h2>
   </header>
   <main>
     <div v-if="isLoading" class="loading">
@@ -23,6 +24,9 @@
             </div>
           </div>
         </div>
+        <button class="downloadButton" @click="exportDataToExcel">
+          Descargar factura
+        </button>
       </article>
       <button @click="sendToRoute('/telefonos')" class="asign">
         Proyectos
@@ -40,9 +44,6 @@
         </div>
       </article>
     </section>
-    <button class="downloadButton" @click="exportDataToExcel">
-      Descargar factura
-    </button>
   </main>
 </template>
 
@@ -155,23 +156,25 @@ html {
   margin: 0;
   padding: 0;
 }
+
 header {
   width: 100%;
   background: #7b2e2fb8;
   color: rgb(16, 9, 9);
-  padding: 1rem 0;
   font-size: 1em;
   text-align: center;
 }
+header h1 {
+  font-size: 1.5rem;
+}
 main .title {
   border-bottom: 2px solid black;
-  padding: 0.5rem;
 }
 .totalPrice {
   margin-left: 1rem;
 }
 .proyectos {
-  height: 50vh;
+  height: 60vh;
   overflow-y: scroll;
 }
 .asign {
