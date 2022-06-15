@@ -8,6 +8,7 @@
       <h2>Procesando factura</h2>
       <p>Loading&#8230;</p>
     </div>
+    <input type="text" v-model="searchProject" />
     <button class="add-button" @click="setActive">Añadir teléfono</button>
     <section class="form-section">
       <form
@@ -27,8 +28,8 @@
       </form>
     </section>
     <Telephone
-      v-for="phone in phones"
-      :key="phone.key"
+      v-for="phone in filteredPhones"
+      :key="phone.phone"
       :description="phone.description"
       :project="phone.project"
       :phone="phone.phone"
@@ -48,6 +49,7 @@ export default {
   data() {
     return {
       phones: [],
+      searchProject: "",
       isLoading: false,
       newPhone: {
         description: "",
@@ -94,6 +96,13 @@ export default {
     },
     setUnactived() {
       this.isActive = false;
+    },
+  },
+  computed: {
+    filteredPhones() {
+      return this.phones.filter((phone) => {
+        return phone.project.includes(this.searchProject.toLowerCase());
+      });
     },
   },
 };
