@@ -8,7 +8,7 @@
       <h2>Procesando factura</h2>
       <p>Loading&#8230;</p>
     </div>
-
+    <input type="text" v-model="searchProject" />
     <div class="main-selection">
       <button class="add-button" @click="setActive">Añadir teléfono</button>
     </div>
@@ -48,6 +48,7 @@ export default {
   data() {
     return {
       phones: [],
+      searchProject: "",
       isLoading: false,
       search: "",
       newPhone: {
@@ -106,6 +107,13 @@ export default {
         return (
           item.project.toLowerCaser().indexOf(this.search.toLowerCaser()) > -1
         );
+      });
+    },
+  },
+  computed: {
+    filteredPhones() {
+      return this.phones.filter((phone) => {
+        return phone.project.includes(this.searchProject.toLowerCase());
       });
     },
   },
