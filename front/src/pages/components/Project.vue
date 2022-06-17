@@ -1,10 +1,8 @@
 <template>
-  <article>
-    <p>
-      ☏ {{ entry.no_assigned_phone }} - 👤 {{ entry.description }} - 💰{{
-        entry.cost
-      }}€
-    </p>
+  <article id="entryContainer">
+    <div class="phone">☏ {{ entry.no_assigned_phone }}</div>
+    <div class="description">👤{{ entry.description }}</div>
+    <div class="cost">💰{{ entry.cost }}€</div>
   </article>
 </template>
 
@@ -53,5 +51,17 @@ h2 {
 }
 p {
   margin-left: 2rem;
+}
+
+#entryContainer {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  width: 50%;
+}
+#entryContainer.description {
+  align-content: start;
+}
+#entryContainer.cost {
+  align-content: start;
 }
 </style>
