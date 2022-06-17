@@ -1,26 +1,26 @@
 <template>
-  <form>
-    <section class="form-data">
-      <label for="phone">Teléfono: </label>
-      <input id="phoneNumber" v-model="phoneData" readonly />
-      <label for="project">Proyecto: </label>
-      <input type="text" id="projectName" v-model="projectData" />
-      <label for="project">Descripción: </label>
-      <input type="text" id="descriptionName" v-model="descriptionData" />
-      <label for="subaccount"> Subcuenta: </label>
-      <input type="text" id="subaccountName" v-model="subaccountData" />
+  <section id="table-projects">
+    <table class="table">
+      <tr class="table-body">
+        <td><input id="phoneNumber" v-model="phoneData" readonly /></td>
 
-      <section>
+        <td><input type="text" id="projectName" v-model="projectData" /></td>
+
+        <td>
+          <input type="text" id="descriptionName" v-model="descriptionData" />
+        </td>
+        <td>
+          <input type="text" id="subaccountName" v-model="subaccountData" />
+        </td>
         <button class="button" @click="deletePhone">
           <span>Eliminar</span>
         </button>
         <button class="button-modify" @click="onModifyButton">
           <span>Modificar</span>
         </button>
-      </section>
-    </section>
-  </form>
-  {{}}
+      </tr>
+    </table>
+  </section>
 </template>
 
 <script>
@@ -100,33 +100,7 @@ export default {
   padding: 0;
   margin: 0;
 }
-.form-data {
-  display: flex;
-  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.4);
-  border-radius: 4px;
-  gap: 0.3em;
-  margin: 1em 3em 1em 3em;
-  padding: 2em 0 2em 1em;
-}
-@media (min-width: 320px) and (max-width: 1281px) {
-  .form-data {
-    display: grid;
-    padding: 5px;
-    padding-right: 1em;
-    margin-right: 3%;
-    margin-left: 1%;
-  }
-  .form-data form label[type="text"] {
-    grid-template-columns: 1fr 1fr;
-  }
-  .button {
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-  }
-}
-form {
-  margin-left: 1em;
-}
+
 button {
   margin-left: auto;
   margin-right: 2rem;
@@ -137,14 +111,15 @@ button {
 }
 .button {
   display: inline-block;
+  margin-top: 0.5em;
   border-radius: 7px;
   border: none;
   background: #c55555b8;
   color: rgb(21, 11, 11);
   text-align: center;
-  font-size: 13px;
+  font-size: 12px;
   width: 10em;
-  padding: 1em;
+  padding: 0.5em;
   transition: all 0.4s;
   cursor: pointer;
 }
@@ -180,9 +155,9 @@ button {
   background: #7b2e2fb8;
   color: rgb(16, 9, 9);
   text-align: center;
-  font-size: 13px;
+  font-size: 12px;
   width: 10em;
-  padding: 1em;
+  padding: 0.5em;
   transition: all 0.4s;
   cursor: pointer;
 }
@@ -218,5 +193,6 @@ input {
   border-radius: 5px;
   border: 1px solid rgba(204, 115, 51, 0.387);
   text-align: center;
+  margin: 1em;
 }
 </style>

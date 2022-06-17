@@ -1,39 +1,39 @@
 <template>
   <header>
-    <h1>Lista de teléfonos</h1>
-    <button class="return-button" @click="$router.go(-1)">↩</button>
+    <h1>Proyectos</h1>
+    <button class="return-button" @click="onButtonBack()">↩</button>
   </header>
   <main>
     <div v-if="isLoading" class="loading">
       <h2>Procesando factura</h2>
       <p>Loading&#8230;</p>
     </div>
-    <button class="add-button" @click="setActive">Añadir teléfono</button>
-    <section class="form-section">
-      <form
-        action=""
-        v-bind:class="{ actived: isActive, unactived: !isActive }"
-      >
-        <button class="delete" @click.prevent="setUnactived">X</button>
-        <label for="Número de telefono">Teléfono</label>
-        <input type="text" v-model="newPhone.phone" />
-        <label for="Descripción">Descripción</label>
-        <input type="text" v-model="newPhone.description" />
-        <label for="Proyecto">Proyecto</label>
-        <input type="text" v-model="newPhone.project" />
-        <label for="Subaccount">Subcuenta</label>
-        <input type="text" v-model="newPhone.subaccount" />
-        <button class="green-button" @click="addNewTelephone">Añadir</button>
-      </form>
+
+    <div class="main-selection">
+      <button class="add-button" @click="setActive">Añadir teléfono</button>
+    </div>
+    <section>
+      <table>
+        <thead class="table-head">
+          <th>Telefono</th>
+          <th>Description</th>
+          <th>Proyecto</th>
+          <th>Subcuenta</th>
+        </thead>
+        <tbody>
+          <tr v-for="phone in phones" :key="phone.key">
+            <div>
+              <Telephone
+                :description="phone.description"
+                :project="phone.project"
+                :phone="phone.phone"
+                :subaccount="phone.subaccount"
+              />
+            </div>
+          </tr>
+        </tbody>
+      </table>
     </section>
-    <Telephone
-      v-for="phone in phones"
-      :key="phone.key"
-      :description="phone.description"
-      :project="phone.project"
-      :phone="phone.phone"
-      :subaccount="phone.subaccount"
-    />
   </main>
 </template>
 
@@ -49,6 +49,7 @@ export default {
     return {
       phones: [],
       isLoading: false,
+      search: "",
       newPhone: {
         description: "",
         project: "",
@@ -95,6 +96,18 @@ export default {
     setUnactived() {
       this.isActive = false;
     },
+    onButtonBack() {
+      this.$router.push("/bill");
+    },
+  },
+  computed: {
+    filterProjects() {
+      return this.newPhone.filter((item) => {
+        return (
+          item.project.toLowerCaser().indexOf(this.search.toLowerCaser()) > -1
+        );
+      });
+    },
   },
 };
 </script>
@@ -106,7 +119,7 @@ export default {
 header {
   width: 100%;
   background: #7b2e2fb8;
-
+  font-family: "Raleway";
   color: rgb(35, 29, 29);
   padding: 1rem 0;
   font-size: 1em;
@@ -119,49 +132,35 @@ header {
     margin-left: 80%;
   }
 }
-.add-button {
-  padding: 0;
-  margin: 6px;
-  margin-left: 80%;
-  margin-right: 5%;
-  margin-top: 2%;
-}
-main {
+thead {
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  overflow-y: scroll;
-  max-height: 78vh;
+  justify-content: space-evenly;
+  margin-left: 9em;
+  gap: 8em;
+  width: 52%;
 }
-form {
+tbody {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  border-radius: 5px;
-  background: white;
-  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
-  border: 2px solid rgba(255, 178, 148, 0.63);
-  height: 40vh;
-  width: 20vw;
-  gap: 0.4rem;
-  margin: auto;
-  position: absolute;
-  /* padding: 2rem; */
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 1em;
+}
+.main-selection {
+  display: flex;
+  justify-content: flex-end;
+  width: 92.5%;
+  margin-top: 1em;
 }
 
-form input {
-  border: 2px solid rgba(0, 0, 0, 0.432);
-  border-radius: 4px;
-}
 .add-button {
   border: none;
-  border-radius: 4px;
   background: #cb8565a5;
   color: rgb(35, 29, 29);
   font-size: 12px;
+  font-family: "Raleway";
   cursor: pointer;
-  padding: 1em 2em;
+  padding: 1em;
+  border-radius: 7px;
 }
 
 .unactived {
@@ -180,6 +179,7 @@ form input {
   background: rgb(255, 90, 90);
   color: black;
   font-size: 1em;
+  font-family: "Raleway";
   font-weight: bold;
   cursor: pointer;
 }
@@ -192,6 +192,7 @@ form input {
   border-radius: 4px;
   background: rgba(224, 190, 156, 0.705);
   font-size: 1em;
+  font-family: "Raleway";
   font-weight: bold;
   cursor: pointer;
 }
@@ -208,7 +209,6 @@ form input {
   right: 0;
 }
 
-/* Transparent Overlay */
 .loading:before {
   content: "";
   display: block;
