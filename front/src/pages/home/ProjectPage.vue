@@ -8,7 +8,13 @@
       <h2>Procesando factura</h2>
       <p>Loading&#8230;</p>
     </div>
-    <input type="text" v-model="searchProject" />
+    <div class="filter">
+      <input
+        type="text"
+        placeholder="Filtrar por categorias..."
+        v-model="searchProject"
+      />
+    </div>
     <div class="main-selection">
       <button class="add-button" @click="setActive">Añadir teléfono</button>
     </div>
@@ -137,13 +143,18 @@ thead {
   justify-content: space-evenly;
   margin-left: 9em;
   gap: 8em;
-  width: 52%;
+  width: 49%;
 }
 tbody {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
   padding: 1em;
+}
+.filter {
+  display: flex;
+  justify-content: center;
+  margin-top: 1em;
 }
 .main-selection {
   display: flex;
