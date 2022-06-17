@@ -21,16 +21,16 @@
           <th>Subcuenta</th>
         </thead>
         <tbody>
-          <tr v-for="phone in phones" :key="phone.key">
-            <div>
-              <Telephone
-                :description="phone.description"
-                :project="phone.project"
-                :phone="phone.phone"
-                :subaccount="phone.subaccount"
-              />
-            </div>
-          </tr>
+          <div>
+            <Telephone
+              v-for="phone in filteredPhones"
+              :key="phone.phone"
+              :description="phone.description"
+              :project="phone.project"
+              :phone="phone.phone"
+              :subaccount="phone.subaccount"
+            />
+          </div>
         </tbody>
       </table>
     </section>
@@ -101,15 +101,7 @@ export default {
       this.$router.push("/bill");
     },
   },
-  computed: {
-    filterProjects() {
-      return this.newPhone.filter((item) => {
-        return (
-          item.project.toLowerCaser().indexOf(this.search.toLowerCaser()) > -1
-        );
-      });
-    },
-  },
+
   computed: {
     filteredPhones() {
       return this.phones.filter((phone) => {
@@ -156,7 +148,7 @@ tbody {
 .main-selection {
   display: flex;
   justify-content: flex-end;
-  width: 92.5%;
+  width: 90%;
   margin-top: 1em;
 }
 
