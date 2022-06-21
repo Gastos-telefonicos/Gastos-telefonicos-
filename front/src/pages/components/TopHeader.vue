@@ -13,6 +13,6 @@ export default {
 <style>
 header {
   padding: 0.4rem;
-  background-color: rgba(255, 30, 30, 0.11);
+  background-color: rgb(160 104 105);
 }
 </style>

@@ -186,8 +186,13 @@ header {
   font-size: 1em;
   text-align: center;
 }
-header h1 {
-  font-size: 1.5rem;
+h1 {
+  font-size: 30px;
+}
+h2 {
+  font-size: 25px;
+  text-decoration: underline;
+  font-weight: normal;
 }
 main .title {
   border-bottom: 2px solid black;
@@ -272,6 +277,10 @@ button:hover::before {
 .danger-project {
   color: rgba(243, 13, 13, 0.856);
   margin-left: 1em;
+}
+.danger-project,
+.description {
+  display: none;
 }
 .loading {
   position: fixed;

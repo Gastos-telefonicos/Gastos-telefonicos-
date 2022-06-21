@@ -1,11 +1,9 @@
 <template>
-  <article>
-    <p>
-      ☏ {{ entry.no_assigned_phone }} - 👤 {{ entry.description }} - 💰{{
-        entry.cost
-      }}€
-    </p>
-  </article>
+  <section class="entryContainer">
+    <div class="phone">☏ {{ entry.no_assigned_phone }}</div>
+    <div class="description">👤 {{ entry.description }}</div>
+    <div class="cost">💰 {{ entry.cost }}€</div>
+  </section>
 </template>
 
 <script>
@@ -46,12 +44,16 @@ export default {
 </script>
 
 <style scoped>
-h2 {
-  border-bottom: 2px solid black;
-  padding: 0.5rem;
-  margin: 1rem;
+.entryContainer {
+  display: flex;
+  gap: 14em;
+  margin-bottom: 0.5em;
+  justify-content: flex-start;
+  margin-left: 1em;
 }
-p {
-  margin-left: 2rem;
+.description,
+.cost {
+  width: 20em;
+  text-align: initial;
 }
 </style>
