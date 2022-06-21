@@ -9,7 +9,6 @@
       <p>Loading&#8230;</p>
     </div>
     <h1 class="title">Proyectos</h1>
-
     <section class="proyectos">
       <article class="danger-projects">
         <div v-for="project of fullProjects" :key="project.project">
@@ -105,7 +104,6 @@ export default {
         `${config.config.API_PATH}/phones/full-data`
       );
       const data = await response.json();
-      console.log(data);
       this.phones = data.phones;
       this.setNewObject();
       this.isLoading = false;
@@ -278,10 +276,7 @@ button:hover::before {
   color: rgba(243, 13, 13, 0.856);
   margin-left: 1em;
 }
-.danger-project,
-.description {
-  display: none;
-}
+
 .loading {
   position: fixed;
   z-index: 999;
