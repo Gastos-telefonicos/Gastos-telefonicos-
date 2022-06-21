@@ -68,10 +68,10 @@ export default {
       fullProjects: [],
       totalProjectsPrices: 0,
       fullPrice: 0,
+      billPrice: 0.0,
     };
   },
   mounted() {
-    this.totalPrice = this.getTotalPrice;
     this.getFullData();
   },
 
@@ -105,6 +105,9 @@ export default {
       );
       const data = await response.json();
       this.phones = data.phones;
+      let totalText = data.total.split(" ");
+      let billPrice = parseInt(totalText[totalText.length - 1]);
+      this.billPrice = billPrice;
       this.setNewObject();
       this.isLoading = false;
     },
@@ -160,6 +163,11 @@ export default {
         a++;
         console.log(this.fullPrice, a);
       }
+      alert(
+        `El precio de la factura es ${
+          this.billPrice
+        } y el total de todos los proyectos es ${this.fullPrice.toFixed(4)}`
+      );
       console.log(this.fullPrice);
     },
   },
