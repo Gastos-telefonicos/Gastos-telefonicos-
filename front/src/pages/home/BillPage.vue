@@ -68,6 +68,7 @@ export default {
       isLoading: false,
       fullProjects: [],
       totalProjectsPrices: 0,
+      fullPrice: 0,
     };
   },
   mounted() {
@@ -94,37 +95,54 @@ export default {
       }, Object.create(null));
 
       this.projects = result;
-      console.log(this.phones);
-
       this.getObjectEntries();
       this.setFullProjects();
     },
     async getFullData() {
       this.isLoading = true;
-      // await new Promise((resolve) => setTimeout(resolve, 2000));
+      await new Promise((resolve) => setTimeout(resolve, 2000));
       const response = await fetch(
         `${config.config.API_PATH}/phones/full-data`
       );
       const data = await response.json();
-      this.phones = data;
+      console.log(data);
+      this.phones = data.phones;
       this.setNewObject();
       this.isLoading = false;
     },
     exportDataToExcel() {
-      const data = this.phones.map((project) => {
+      console.log(this.fullProjects);
+      const data = this.fullProjects.map((proj) => {
+        let slicedProj = proj.project.slice(0, 3);
         return {
-          Descripcion: project.description,
-          Teléfono: project.phone,
-          Proyecto: project.project,
-          Subcuenta: project.subaccount,
+          DEBE: "",
+          HABER: "",
+          "E/R": "",
+          "Su Fra. Nº": "",
+          Comentario: "",
+          Importe: proj.totalPrice,
+          "Fra./Reg.": "",
+          "Clave Op.": "",
+          "T.Doc.": "",
+          Docu: proj.project,
+          "Pr.": "",
+          Dpto: slicedProj,
+          "Cód.P": proj.project,
+          LibreA2: "",
+          Asiento: "",
         };
       });
+
+      // const data = this.projects.map((project) => {
+      //   console.log(project);
+      // });
 
       const fileName = "download";
       const exportType = "xls";
       exportFromJSON({ data, fileName, exportType });
     },
     setFullProjects() {
+      let a = 1;
       for (let key in this.projects) {
         let total = 0;
         let totalAllPrices = 0;
@@ -140,7 +158,11 @@ export default {
           info: this.projects[key],
           totalPrice: total.toFixed(2),
         });
+        this.fullPrice += parseFloat(total.toFixed(2));
+        a++;
+        console.log(this.fullPrice, a);
       }
+      console.log(this.fullPrice);
     },
   },
   computed: {},
