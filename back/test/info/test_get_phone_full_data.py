@@ -30,13 +30,14 @@ def test_should_return_phone_project_description_and_cost():
     response_1 = client_one.get("/api/phones/full-data")
 
     # ASSERT (then)
-    assert response_1.json == [
+    assert response_1.json['phones'] == [
         {
             "phone": "747 458 001",
             "project": "GEN1234",
             "description": "JOSEBA",
             "subaccount": "628",
             "cost": "40",
+            "no_assigned_phone":"747 458 001"
         },
         {
             "phone": "1644541545",
@@ -44,5 +45,6 @@ def test_should_return_phone_project_description_and_cost():
             "description": "JOSU",
             "subaccount": "628",
             "cost": "90",
+            "no_assigned_phone":"1644541545"
         },
     ]
