@@ -1,5 +1,5 @@
 export default {
-    config: {
-        API_PATH:"http://localhost:5000/api"
-    }
-}
+  config: {
+    API_PATH: "http://localhost:5000/api",
+  },
+};

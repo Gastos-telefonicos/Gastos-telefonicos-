@@ -99,7 +99,10 @@ export default {
     },
     async getFullData() {
       this.isLoading = true;
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      this.projects = [];
+      this.phones = [];
+      this.fullProjects = [];
+      await new Promise((resolve) => setTimeout(resolve, 3000));
       const response = await fetch(
         `${config.config.API_PATH}/phones/full-data`
       );
@@ -107,6 +110,8 @@ export default {
       this.phones = data.phones;
       let totalText = data.total.split(" ");
       let billPrice = parseInt(totalText[totalText.length - 1]);
+      let fullPrice = parseInt(data.total_projects);
+      this.fullPrice = fullPrice;
       this.billPrice = billPrice;
       this.setNewObject();
       this.isLoading = false;
@@ -143,32 +148,24 @@ export default {
       exportFromJSON({ data, fileName, exportType });
     },
     setFullProjects() {
-      let a = 1;
+      this.fullProjects = [];
       for (let key in this.projects) {
         let total = 0;
-        let totalAllPrices = 0;
         let value = this.projects[key];
         for (let entry of value) {
           let cost = entry.cost.replace(",", ".");
           let parsedCost = parseFloat(cost).toFixed(2);
           total += parseFloat(parsedCost);
         }
-        totalAllPrices = totalAllPrices + total;
         this.fullProjects.push({
           project: key,
           info: this.projects[key],
           totalPrice: total.toFixed(2),
         });
-        this.fullPrice += parseFloat(total.toFixed(2));
-        a++;
-        console.log(this.fullPrice, a);
       }
       alert(
-        `El precio de la factura es ${
-          this.billPrice
-        } y el total de todos los proyectos es ${this.fullPrice.toFixed(4)}`
+        `El precio de la factura es ${this.billPrice} y el total de todos los proyectos es ${this.fullPrice}`
       );
-      console.log(this.fullPrice);
     },
   },
   computed: {},

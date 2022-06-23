@@ -1,3 +1,4 @@
+from xml.dom.expatbuilder import parseString
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import json
@@ -7,6 +8,7 @@ from src.domain.phones import Phone
 from src.domain.services.bill_services import *
 import os
 import dotenv
+
 def create_app(repositories):
     dotenv_file = dotenv.find_dotenv()
     dotenv.load_dotenv(dotenv_file)
@@ -37,18 +39,16 @@ def create_app(repositories):
 
     @app.route("/api/phones/full-data", methods=["GET"])
     def get_full_data_phone():
-        print("ejecuto el full-data")
         phone = repositories["phones"].get_full_data_phone()
         config = dotenv.dotenv_values(".env")
-        print(config['TOTAL'],"soy el totalprice del fulldata")
         return jsonify({
             "phones":phone,
-            "total":config['TOTAL']
+            "total":config['TOTAL'],
+            'total_projects':config['PROJECTS_TOTAL']
         })
 
     @app.route("/api/docs", methods=["POST"])
     def pdf_post():
-        print("ejecuto el post")
         body = request.json
         base64_string = ""
         try:
@@ -59,9 +59,16 @@ def create_app(repositories):
         pdf_numbers_with_cost = pdf_invoice.convert_base64_to_pdf(base64_string)
         dotenv.set_key(dotenv_file, "TOTAL", pdf_numbers_with_cost['total'].group(0))
         repositories["phones_cost"].delete_table()
+        totalCost = 0
         for phone in pdf_numbers_with_cost['phones_list']:
+            # phone['cost'] = str(phone['cost']).replace(",",".")
+            try:
+                totalCost += float(phone['cost'].replace(",","."))
+            except:
+                totalCost += float(phone['cost'])
             phone_cost = PhoneCost(**phone)
             repositories["phones_cost"].save(phone_cost)
+        dotenv.set_key(dotenv_file, "PROJECTS_TOTAL", str(totalCost))
         return jsonify(pdf_numbers_with_cost['phones_list'])
 
     @app.route("/api/phones", methods=["PUT"])

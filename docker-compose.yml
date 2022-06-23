@@ -1,0 +1,29 @@
+version: '3'
+services:
+  frontend:
+    image: gastosfrontend
+    ports:
+      - "8080:8080"
+    networks:
+      - front-tier
+      - back-tier
+
+  backend:
+    image: back_web
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./back:/back/app
+    networks:
+      - back-tier
+configs:
+  httpd-config:
+    external: true
+
+secrets:
+  server-certificate:
+    external: true
+
+networks:
+  front-tier: {}
+  back-tier: {}
