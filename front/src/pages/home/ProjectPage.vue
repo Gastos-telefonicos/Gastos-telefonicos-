@@ -12,7 +12,7 @@
       <input
         type="text"
         placeholder="Filtrar por categorias..."
-        v-model="searchProject"
+        v-model="search"
       />
     </div>
     <div class="main-selection">
@@ -21,16 +21,16 @@
     <section>
       <table>
         <thead class="table-head">
-          <th>Telefono</th>
-          <th>Description</th>
+          <th>Teléfono</th>
           <th>Proyecto</th>
+          <th>Descripción</th>
           <th>Subcuenta</th>
         </thead>
         <tbody>
           <div>
             <Telephone
               v-for="phone in filteredPhones"
-              :key="phone.phone"
+              :key="phone"
               :description="phone.description"
               :project="phone.project"
               :phone="phone.phone"
@@ -110,9 +110,10 @@ export default {
 
   computed: {
     filteredPhones() {
-      return this.phones.filter((phone) => {
-        return phone.project.includes(this.searchProject.toLowerCase());
+      let filteredPhones = this.phones.filter((phone) => {
+        return phone.project.toLowerCase().includes(this.search.toLowerCase());
       });
+      return filteredPhones;
     },
   },
 };
