@@ -48,3 +48,5 @@ def test_should_return_phone_project_description_and_cost():
             "no_assigned_phone":"1644541545"
         },
     ]
+    print(response_1.json)
+    
