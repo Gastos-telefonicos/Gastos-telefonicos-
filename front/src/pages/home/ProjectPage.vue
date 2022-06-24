@@ -135,10 +135,9 @@ export default {
 }
 header {
   width: 100%;
+  padding-top: 1em;
   background: #7b2e2fb8;
-  font-family: "Raleway";
-  color: rgb(35, 29, 29);
-  padding: 1rem 0;
+  color: rgb(16, 9, 9);
   font-size: 1em;
   text-align: center;
 }
