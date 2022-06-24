@@ -4,6 +4,16 @@
     <button class="return-button" @click="onButtonBack()">↩</button>
   </header>
   <main>
+    <form action="" v-bind:class="{ actived: isActive, unactived: !isActive }">
+      <button class="delete" @click.prevent="setUnactived">X</button>
+      <label for="Número de telefono">Teléfono</label>
+      <input type="text" v-model="newPhone.phone" />
+      <label for="Descripción">Descripción</label>
+      <input type="text" v-model="newPhone.description" />
+      <label for="Proyecto">Proyecto</label>
+      <input type="text" v-model="newPhone.project" />
+      <button class="green-button" @click="addNewTelephone">Añadir</button>
+    </form>
     <div v-if="isLoading" class="loading">
       <h2>Procesando factura</h2>
       <p>Loading&#8230;</p>
@@ -132,6 +142,59 @@ header {
   font-size: 1em;
   text-align: center;
 }
+
+form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 5px;
+  background: white;
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
+  border: 2px solid #cb8565a5;
+  height: 40vh;
+  width: 20vw;
+  gap: 0.4rem;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  padding: 2rem;
+}
+form input {
+  border: 2px solid rgba(0, 0, 0, 0.432);
+  border-radius: 4px;
+  max-width: 100%;
+}
+.green-button {
+  border: 2px solid rgba(0, 0, 0, 0.432);
+  border-radius: 4px;
+  background: #cb8565a5;
+  color: black;
+  font-size: 1em;
+  font-family: "Raleway";
+  font-weight: bold;
+  cursor: pointer;
+}
+.unactived {
+  visibility: hidden;
+}
+.actived {
+  visibility: visible;
+}
+.delete {
+  border: 2px solid rgba(0, 0, 0, 0.432);
+  border-radius: 4px;
+  background: rgb(255, 90, 90);
+  color: black;
+  font-size: 1em;
+  font-family: "Raleway";
+  font-weight: bold;
+  cursor: pointer;
+}
+
 @media (min-width: 320px) and (max-width: 1281px) {
   .add-button {
     padding: 0;
