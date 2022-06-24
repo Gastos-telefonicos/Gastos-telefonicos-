@@ -72,7 +72,7 @@ export default {
 
       location.reload();
 
-      alert("Contacto eliminado exitosamente");
+      alert("Teléfono eliminado exitosamente");
     },
     async onModifyButton() {
       let jsonPhone = JSON.stringify({
@@ -89,7 +89,7 @@ export default {
         },
       };
       await fetch(`${config.config.API_PATH}/phones`, settings);
-      alert("Contacto guardado exitosamente");
+      alert("Cambios guardados exitosamente");
     },
   },
 };

@@ -11,7 +11,7 @@
     <div class="filter">
       <input
         type="text"
-        placeholder="Filtrar por categorias..."
+        placeholder="Filtrar por proyectos..."
         v-model="search"
       />
     </div>
@@ -160,7 +160,7 @@ tbody {
 .main-selection {
   display: flex;
   justify-content: flex-end;
-  width: 90%;
+  width: 83%;
   margin-top: 1em;
 }
 
