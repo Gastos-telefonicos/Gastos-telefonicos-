@@ -34,4 +34,7 @@ El regex queda de la siguiente manera >>>>> r"([6|7]\d{2} \d{3} \d{3})\n(-?\d{1,
 
 Si la estructura de la facura cambia en el futuro, el patrón podría ya no seguir funcionando y por lo tanto habría que modificarlo.
 ```
-
+### Como añadir una nueva columna al excel
+```
+    Para añadir una una nueva columna, deberás ir a BillPage, a la función exportDataToExcel y añadir un nuevo campo en el return.
+``` 
