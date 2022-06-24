@@ -1,6 +1,6 @@
 <template>
   <header>
-    <h1>Proyectos</h1>
+    <h1>Lista de teléfonos</h1>
     <button class="return-button" @click="onButtonBack()">↩</button>
   </header>
   <main>
