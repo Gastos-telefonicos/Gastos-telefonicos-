@@ -23,3 +23,6 @@
 5. Instalar modulo PyPDF2
 
    `pip install PyPDF2`
+
+6. Instalar modulo Docker 
+   `pip install python-dotev`
