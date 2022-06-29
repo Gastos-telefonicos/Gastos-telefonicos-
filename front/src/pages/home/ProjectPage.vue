@@ -120,10 +120,17 @@ export default {
 
   computed: {
     filteredPhones() {
-      let filteredPhones = this.phones.filter((phone) => {
-        return phone.project.toLowerCase().includes(this.search.toLowerCase());
+      return this.phones.filter((phone) => {
+        if (
+          phone.project.toLowerCase().includes(this.search.toLowerCase()) ||
+          phone.description.toUpperCase().includes(this.search.toUpperCase()) ||
+          phone.phone.toLowerCase().includes(this.search.toLowerCase())
+        ) {
+          return true;
+        } else {
+          return false;
+        }
       });
-      return filteredPhones;
     },
   },
 };

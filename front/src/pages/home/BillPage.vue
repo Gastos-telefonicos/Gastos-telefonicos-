@@ -27,7 +27,7 @@
           Descargar factura
         </button>
       </article>
-      <button @click="sendToRoute('/projects')" class="asign">Telefonos</button>
+      <button @click="sendToRoute('/projects')" class="asign">Teléfonos</button>
       <article class="projects">
         <div v-for="project of fullProjects" :key="project.project">
           <h3 class="project" v-if="project.project != ''">
